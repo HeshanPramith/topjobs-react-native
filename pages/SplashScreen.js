@@ -1,53 +1,109 @@
-import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
-import * as Font from 'expo-font';
-import styles from '../assets/styles/styles'; // Import the styles from the separate file
+import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StatusBar,
+  ImageBackground,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import * as Font from "expo-font";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "../assets/styles/styles";
 
 const SplashScreen = () => {
-  const navigation = useNavigation(); // Use useNavigation hook to get the navigation object
+  const navigation = useNavigation();
 
   useEffect(() => {
-    // Load the custom font
     async function loadFont() {
       await Font.loadAsync({
-        'verdana': require('../assets/fonts/verdana-bold.ttf'),
-        'verdananormal': require('../assets/fonts/verdana.ttf'),
+        verdana: require("../assets/fonts/verdana-bold.ttf"),
+        verdananormal: require("../assets/fonts/verdana.ttf"),
       });
     }
 
-    StatusBar.setBarStyle('light-content');
+    StatusBar.setBarStyle("dark-content");
 
     loadFont();
   }, []);
 
   const handleLoginPress = () => {
-    // Handle Login button press
-    // You can navigate to the login screen or perform any other action
-    console.log('Login button pressed');
+    navigation.navigate("Login");
   };
 
   const handleViewJobsPress = () => {
-    // Handle View Jobs button press
-    // Navigate to the MainScreen
-    navigation.navigate('Main'); // Replace 'MainScreen' with the name of your MainScreen component
+    navigation.navigate("Main");
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>topjobs</Text>
-      <Text style={styles.text2}>Recruitment Made Easy</Text>
-      <Text style={styles.text2}>More than 3500+ jobs</Text>
+    <View style={styles.spcon}>
+      <ImageBackground
+        source={require("../assets/images/sp-bg.jpg")}
+        style={styles.backgroundImage}
+      >
+        <View style={styles.spcon}>
+          <Text style={styles.logintext}>topjobs</Text>
+          <Text style={styles.logintext2}>Recruitment Made Easy</Text>
+          <Text style={styles.logintext3}>More than 3500+ jobs</Text>
 
-      {/* Login Button */}
-      <TouchableOpacity onPress={handleLoginPress} style={styles.button}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+          {/* Login and View Job Categories Buttons with Icons */}
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={handleLoginPress}
+              style={[styles.button, styles.iconButton]}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons
+                  name="person"
+                  size={20}
+                  color="#FFFFFF"
+                  style={{ marginRight: 10 }}
+                />
+                <Text style={styles.buttonText}>Jobseeker Login</Text>
+              </View>
+            </TouchableOpacity>
 
-      {/* View Job Categories Button */}
-      <TouchableOpacity onPress={handleViewJobsPress} style={styles.button}>
-        <Text style={styles.buttonText}>View Job Categories</Text>
-      </TouchableOpacity>
+            <Text
+              style={[styles.ortext]}
+            >
+              OR
+            </Text>
+
+            <TouchableOpacity
+              onPress={handleViewJobsPress}
+              style={[styles.jcbutton, styles.jciconButtonbg]}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons
+                  name="briefcase"
+                  size={20}
+                  color="#000000"
+                  style={{ marginRight: 10 }}
+                />
+                <Text style={styles.jcbuttonText}>View Job Categories</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
