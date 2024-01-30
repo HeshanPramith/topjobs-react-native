@@ -41,6 +41,7 @@ export default function App() {
           component={LoginScreen}
           options={{
             headerTitleAlign: 'center',
+            headerLeft: false,
             headerTitleStyle: {
               color: '#FFFFFF',
               fontSize: 16,

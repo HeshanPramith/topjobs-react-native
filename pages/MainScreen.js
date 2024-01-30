@@ -179,7 +179,10 @@ const MainScreen = () => {
             const itemCount = parsedData.items.length;
             return { link, alias, itemCount };
           } catch (error) {
-            console.error(`Error fetching or parsing RSS feed for ${alias}:`, error);
+            console.error(
+              `Error fetching or parsing RSS feed for ${alias}:`,
+              error
+            );
             return { link, alias, itemCount: 0 };
           }
         })
@@ -216,10 +219,6 @@ const MainScreen = () => {
     }
   };
 
-  const navigateToFavoriteItems = () => {
-    navigation.navigate('FavoriteItemsScreen', { favorites });
-  };
-
   return (
     <View style={styles.mainscontainer}>
       <View style={styles.buttonContainer}>
@@ -246,17 +245,9 @@ const MainScreen = () => {
           ))}
         </ScrollView>
       )}
-      
-      {/* <View style={styles.buttonContainer}>
-        <Button
-          title={'View Favorites'}
-          onPress={navigateToFavoriteItems}
-        />
-      </View> */}
-      <AppNavigator />
+      <AppNavigator/>
     </View>
   );
 };
-
 
 export default MainScreen;

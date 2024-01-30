@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import styles from "../assets/styles/styles";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppNavigator from "./AppNavigator";
 
 const FavoriteItemsScreen = ({ route }) => {
   // Manage favorites in the component state
@@ -12,7 +13,7 @@ const FavoriteItemsScreen = ({ route }) => {
 
     try {
       // Save the updated favorites to AsyncStorage
-      await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));
       // Update the component state to reflect the real-time removal
       setFavorites(updatedFavorites);
     } catch (error) {
@@ -24,7 +25,7 @@ const FavoriteItemsScreen = ({ route }) => {
     // Load favorites from AsyncStorage when the component mounts
     const loadFavorites = async () => {
       try {
-        const storedFavorites = await AsyncStorage.getItem('favorites');
+        const storedFavorites = await AsyncStorage.getItem("favorites");
         if (storedFavorites) {
           setFavorites(JSON.parse(storedFavorites));
         }
@@ -37,9 +38,10 @@ const FavoriteItemsScreen = ({ route }) => {
   }, []); // Empty dependency array to run only once when the component mounts
 
   return (
-    <View style={styles.containeritemscreen}>
+    <View style={styles.mainscontainer}>
       <Text>Favorites: {favorites.length}</Text>
       <FlatList
+        style={styles.scrollView}
         data={favorites}
         keyExtractor={(item, index) => `${item.title}-${index}`}
         renderItem={({ item }) => (
@@ -57,6 +59,7 @@ const FavoriteItemsScreen = ({ route }) => {
           </View>
         )}
       />
+      <AppNavigator />
     </View>
   );
 };

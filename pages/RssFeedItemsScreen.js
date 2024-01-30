@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import { parse } from "react-native-rss-parser";
 import styles from "../assets/styles/styles";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppNavigator from "./AppNavigator";
 
 const RssFeedItemsScreen = ({ route, navigation }) => {
   const { rssLink } = route.params;
@@ -26,20 +26,16 @@ const RssFeedItemsScreen = ({ route, navigation }) => {
     );
   };
 
-  const navigateToFavoriteItems = () => {
-    navigation.navigate('FavoriteItemsScreen', { favorites });
-  };
-
   const toggleFavorite = async (item) => {
-    const updatedFavorites = favorites.includes(item) ?
-      favorites.filter((favorite) => favorite !== item) :
-      [...favorites, item];
+    const updatedFavorites = favorites.includes(item)
+      ? favorites.filter((favorite) => favorite !== item)
+      : [...favorites, item];
 
     setFavorites(updatedFavorites);
 
     try {
       // Save the updated favorites to AsyncStorage
-      await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     } catch (error) {
       console.error("Error saving favorites:", error);
     }
@@ -58,28 +54,24 @@ const RssFeedItemsScreen = ({ route, navigation }) => {
       .catch((error) => console.error("Error fetching RSS feed:", error))
       .finally(() => setLoading(false));
 
-      const loadFavorites = async () => {
-        try {
-          // Load favorites from AsyncStorage
-          const storedFavorites = await AsyncStorage.getItem('favorites');
-          if (storedFavorites) {
-            setFavorites(JSON.parse(storedFavorites));
-          }
-        } catch (error) {
-          console.error("Error loading favorites:", error);
+    const loadFavorites = async () => {
+      try {
+        // Load favorites from AsyncStorage
+        const storedFavorites = await AsyncStorage.getItem("favorites");
+        if (storedFavorites) {
+          setFavorites(JSON.parse(storedFavorites));
         }
-      };
-  
-      loadFavorites();
+      } catch (error) {
+        console.error("Error loading favorites:", error);
+      }
+    };
 
+    loadFavorites();
   }, [rssLink, navigation]);
 
   return (
-    <View style={styles.containeritemscreen}>
+    <View style={styles.mainscontainer}>
       <Text>Total Jobs: {rssItems.length}</Text>
-      <TouchableOpacity onPress={navigateToFavoriteItems}>
-        <Text>View Favorites</Text>
-      </TouchableOpacity>
       {loading ? (
         <View style={styles.activityIndicatorContainer}>
           <ActivityIndicator size="large" color="#580000" />
@@ -97,8 +89,15 @@ const RssFeedItemsScreen = ({ route, navigation }) => {
             >
               <Text>{item.title}</Text>
               <Text>{item.description}</Text>
-              <TouchableOpacity onPress={() => toggleFavorite(item)} style={styles.rssLinkButton}>
-                <Text>{favorites.includes(item) ? "Remove from Favorites" : "Add to Favorites"}</Text>
+              <TouchableOpacity
+                onPress={() => toggleFavorite(item)}
+                style={styles.rssLinkButton}
+              >
+                <Text>
+                  {favorites.includes(item)
+                    ? "Remove from Favorites"
+                    : "Add to Favorites"}
+                </Text>
               </TouchableOpacity>
             </TouchableOpacity>
           )}
@@ -109,6 +108,7 @@ const RssFeedItemsScreen = ({ route, navigation }) => {
           )}
         />
       )}
+      <AppNavigator/>
     </View>
   );
 };

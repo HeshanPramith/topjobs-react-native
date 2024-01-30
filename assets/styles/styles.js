@@ -190,12 +190,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    paddingBottom: 55,
   },
   buttonContainer: {
     marginVertical: 10,
   },
   scrollView: {
+    paddingHorizontal: 15,
     flex: 1,
+    width: "100%",
   },
   rssLinkButton: {
     marginBottom: 10,
@@ -203,6 +206,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#e0e0e0",
     borderRadius: 5,
   },
+  bottomNavigator: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    width: '100%',
+    justifyContent: "space-evenly",
+    alignContent: "space-evenly",
+    alignItems: "center",
+  },
+  bottomNavBtn: {
+    marginHorizontal: 10,
+  }
 });
 
 export default styles;
