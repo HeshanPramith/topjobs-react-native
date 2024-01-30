@@ -7,6 +7,7 @@ import SplashScreen from './pages/SplashScreen';
 import MainScreen from './pages/MainScreen';
 import LoginScreen from './pages/LoginScreen';
 import RssFeedItemsScreen from './pages/RssFeedItemsScreen';
+import FavoriteItemsScreen from './pages/FavoriteItemsScreen';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,7 @@ export default function App() {
           name="Main"
           component={MainScreen}
           options={{
+            title: 'All Job Categories',
             headerTitleAlign: 'center',
             headerTitleStyle: {
               color: '#FFFFFF',
@@ -53,6 +55,24 @@ export default function App() {
           name="RssFeedItemsScreen"
           component={RssFeedItemsScreen}
           options={{
+            title: 'Loading Vacancies',
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              color: '#FFFFFF',
+              fontSize: 16,
+            },
+            headerStyle: {
+              backgroundColor: '#8b0000',
+            },
+            headerTintColor: '#FFFFFF',
+          }}
+        />
+
+        <Stack.Screen
+          name="FavoriteItemsScreen"
+          component={FavoriteItemsScreen}
+          options={{
+            title: 'My Favorite Vacancies',
             headerTitleAlign: 'center',
             headerTitleStyle: {
               color: '#FFFFFF',

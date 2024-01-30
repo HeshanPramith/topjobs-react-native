@@ -110,6 +110,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+  lgiconButtonbg: {
+    textAlign: "center",
+    backgroundColor: "#8b0000",
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    color: "#000000",
+    elevation: 5, // For Android elevation (shadow)
+    shadowColor: "#8b0000", // For iOS shadow color (same as button background color)
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+  },
+
   jciconButtonbg: {
     textAlign: "center",
     backgroundColor: "#ffcc33",
@@ -144,6 +157,51 @@ const styles = StyleSheet.create({
     verticalAlign: "middle",
     color: "black",
     fontWeight: "bold",
+  },
+
+  rssItemContainer: {
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: "#e0e0e0",
+    borderRadius: 5,
+  },
+
+  activityIndicatorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  containeritemscreen: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 10,
+  },
+
+  skeletonItem: {
+    marginBottom: 10,
+    padding: 10,
+    borderRadius: 5,
+    overflow: 'hidden', // Ensure that the gradient is clipped within the border radius
+  },
+
+  mainscontainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonContainer: {
+    marginVertical: 10,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  rssLinkButton: {
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: "#e0e0e0",
+    borderRadius: 5,
   },
 });
 
