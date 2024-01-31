@@ -75,7 +75,7 @@ export default function App() {
               name="FavoritesScreen"
               component={FavoritesScreen}
               options={{
-                title: 'Fav',
+                title: 'My Favorites',
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
                   color: '#FFFFFF',

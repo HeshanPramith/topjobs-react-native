@@ -182,8 +182,8 @@ const styles = StyleSheet.create({
   },
   rssLinkButton: {
     marginBottom: 10,
-    padding: 10,
-    backgroundColor: "#e0e0e0",
+    padding: 15,
+    backgroundColor: "#ececec6c",
     borderRadius: 5,
   },
   bottomNavigator: {
@@ -193,15 +193,16 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     width: '95%',
-    justifyContent: "space-between",
-    alignContent: "space-between",
+    justifyContent: "space-around",
+    alignContent: "space-around",
     alignItems: "center",
     paddingVertical: 10,
     borderRadius: 30,
     marginHorizontal: 10
   },
   bottomNavBtn: {
-    marginHorizontal: 40
+    marginHorizontal: 0,
+    width: 120
   },
   bottomButtonText: {
     fontSize: 12
@@ -224,12 +225,13 @@ const styles = StyleSheet.create({
     padding: 0,
     marginVertical: 5,
     borderRadius: 5,
-    backgroundColor: "#ecececff",
+    backgroundColor: "#ececec6c",
     justifyContent: 'center',
     alignContent: 'center',
     overflow: 'hidden',
   },
   rssItemTextContainer: {
+    padding: 15,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
@@ -248,11 +250,73 @@ const styles = StyleSheet.create({
   },
   gradientContainer: {
     flex: 1,
-    padding: 10
+    padding: 0
   },
   favico: {
-    marginTop: 6
-  }
+    //marginTop: 6
+  },
+  searchContainer: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#FFF',
+    marginBottom: 10,
+    paddingHorizontal: 15,
+    //flex: 1,
+    flexDirection: "row"
+  },
+  searchInput: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#ffcc33',
+    borderColor: "#ccc",
+    borderWidth: 0,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    paddingHorizontal: 16,
+    color: '#000',
+    position: "relative",
+    zIndex: 1
+  },
+  searchIconContainer: {
+    width: '10%',
+    height: 50,
+    backgroundColor: '#ffcc33',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 5,
+    justifyContent: "center",
+    color: '#FFF',
+    position: "absolute",
+    right: 15,
+    zIndex: 2,
+    pointerEvents: "none"
+  },
+  rssLeftCon: {
+    width: '87%'
+  },
+  rssRightCon: {
+    width: '13%',
+    height: 'auto',
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center"
+  },
+  placeholderContainer: {
+    flex: 1,
+    height: 500,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30
+  },
+  placeholderText: {
+    fontSize: 16,
+    color: '#000',
+    marginTop: 30
+  },
 });
 
 export default styles;
