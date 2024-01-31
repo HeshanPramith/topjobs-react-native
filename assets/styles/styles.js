@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 50,
-    fontFamily: "verdana",
     color: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
@@ -23,7 +22,6 @@ const styles = StyleSheet.create({
   },
   text2: {
     fontSize: 17,
-    fontFamily: "verdananormal",
     color: "#FFFFFF",
     justifyContent: "center",
     marginBottom: 50,
@@ -34,7 +32,6 @@ const styles = StyleSheet.create({
   },
   logintext: {
     fontSize: 70,
-    fontFamily: "verdana",
     color: "#8b0000",
     alignItems: "center",
     justifyContent: "center",
@@ -43,7 +40,6 @@ const styles = StyleSheet.create({
   },
   logintext2: {
     fontSize: 19,
-    fontFamily: "verdananormal",
     color: "#8b0000",
     justifyContent: "center",
     marginBottom: 50,
@@ -67,21 +63,18 @@ const styles = StyleSheet.create({
   },
   text3: {
     fontSize: 17,
-    fontFamily: "verdananormal",
     color: "#FFFFFF",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     textAlign: "center",
   },
-
   button: {
     backgroundColor: "#fff",
     padding: 10,
     margin: 10,
     borderRadius: 5,
   },
-
   jcbutton: {
     backgroundColor: "#fff",
     padding: 10,
@@ -89,7 +82,6 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     borderRadius: 5,
   },
-
   buttonText: {
     color: "#FFFFFF",
     fontSize: 16,
@@ -100,57 +92,50 @@ const styles = StyleSheet.create({
   iconcolorred: {
     color: "#8b0000",
   },
-
   iconButton: {
-    height: 40, // Set the desired height for the buttons
-    //width: 200, // Set the desired width for the buttons
+    height: 40,
     textAlign: "center",
     backgroundColor: "#8b0000",
     borderRadius: 30,
     paddingHorizontal: 20,
   },
-
   lgiconButtonbg: {
     textAlign: "center",
     backgroundColor: "#8b0000",
     borderRadius: 30,
     paddingHorizontal: 20,
     color: "#000000",
-    elevation: 5, // For Android elevation (shadow)
-    shadowColor: "#8b0000", // For iOS shadow color (same as button background color)
+    elevation: 5,
+    shadowColor: "#8b0000",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
   },
-
   jciconButtonbg: {
     textAlign: "center",
     backgroundColor: "#ffcc33",
     borderRadius: 30,
     paddingHorizontal: 20,
     color: "#000000",
-    elevation: 5, // For Android elevation (shadow)
-    shadowColor: "#ffcc33", // For iOS shadow color (same as button background color)
+    elevation: 5,
+    shadowColor: "#ffcc33",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
   },
-
   jcbuttonText: {
     color: "#000000",
     fontSize: 16,
     textAlign: "center",
     fontWeight: "700",
   },
-
   backgroundImage: {
     flex: 1,
     width: "100%",
     height: "100%",
-    resizeMode: "cover", // or 'stretch' or 'contain'
+    resizeMode: "cover",
     backgroundColor: "#FFF",
   },
-
   ortext: {
     width: "100%",
     height: 30,
@@ -158,39 +143,34 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
   },
-
   rssItemContainer: {
     marginBottom: 10,
     padding: 10,
     backgroundColor: "#e0e0e0",
     borderRadius: 5,
   },
-
   activityIndicatorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   containeritemscreen: {
     flex: 1,
     backgroundColor: "#fff",
     padding: 10,
   },
-
   skeletonItem: {
     marginBottom: 10,
     padding: 10,
     borderRadius: 5,
-    overflow: 'hidden', // Ensure that the gradient is clipped within the border radius
+    overflow: 'hidden',
   },
-
   mainscontainer: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 55,
+    paddingBottom: 80,
   },
   buttonContainer: {
     marginVertical: 10,
@@ -207,17 +187,71 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   bottomNavigator: {
+    backgroundColor: "#8b0000",
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    width: '100%',
-    justifyContent: "space-evenly",
-    alignContent: "space-evenly",
+    width: '95%',
+    justifyContent: "space-between",
+    alignContent: "space-between",
     alignItems: "center",
+    paddingVertical: 10,
+    borderRadius: 30,
+    marginHorizontal: 10
   },
   bottomNavBtn: {
-    marginHorizontal: 10,
+    marginHorizontal: 40
+  },
+  bottomButtonText: {
+    fontSize: 12
+  },
+  bottomButtonTextAct: {
+    fontSize: 12,
+    color: '#ffffff',
+    fontWeight: "bold"
+  },
+  bottomButtonTextInAct: {
+    fontSize: 12,
+    color: '#ffffffc4',
+  },
+  bottomButtonTextSpla: {
+    fontSize: 12,
+    color: '#ffffffc4',
+    fontWeight: "bold",
+  },
+  rssItemContainerDetail: {
+    padding: 0,
+    marginVertical: 5,
+    borderRadius: 5,
+    backgroundColor: "#ecececff",
+    justifyContent: 'center',
+    alignContent: 'center',
+    overflow: 'hidden',
+  },
+  rssItemTextContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  rssLinkButtonDetail: {
+    padding: 10,
+    backgroundColor: "#580000",
+    borderRadius: 5,
+    color: '#FFFFFF',
+  },
+  white: {
+    color: '#FFFFFF',
+  },
+  favoriteItem: {
+    // Remove backgroundColor from here
+  },
+  gradientContainer: {
+    flex: 1,
+    padding: 10
+  },
+  favico: {
+    marginTop: 6
   }
 });
 

@@ -19,7 +19,6 @@ const MainScreen = () => {
   const [rssData, setRssData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [favorites, setFavorites] = useState([]);
   const rssLinksWithAlias = [
     {
       link: "http://www.topjobs.lk/feeds/legasy/it_sware_db_qa_web_graphics_gis.rss",

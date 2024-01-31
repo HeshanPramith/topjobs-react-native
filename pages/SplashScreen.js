@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../assets/styles/styles";
+import { useToast } from '@siteed/react-native-toaster';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
@@ -27,8 +28,28 @@ const SplashScreen = () => {
     loadFont();
   }, []);
 
+  const toaster = useToast();
+
   const handleLoginPress = () => {
-    navigation.navigate("Login");
+    toaster.show({
+      message: 'Feature Coming Soon',
+      subMessage: 'Jobseeker login feature coming soon',
+      type: 'warning',
+      actionLabel: 'OK',
+      iconVisible: true,
+      snackbarStyle: {
+        borderRadius: 50,
+      },
+      duration: 8000,
+      action() {
+        
+      },
+      position: "bottom",
+      subMessageStyle: {
+        fontSize: 12,
+        color: '#FFFFFF'
+      },
+    });
   };
 
   const handleViewJobsPress = () => {
@@ -36,17 +57,16 @@ const SplashScreen = () => {
   };
 
   return (
+
     <View style={styles.spcon}>
       <ImageBackground
         source={require("../assets/images/sp-bg.jpg")}
         style={styles.backgroundImage}
       >
         <View style={styles.spcon}>
-          <Text style={styles.logintext}>topjobs</Text>
-          <Text style={styles.logintext2}>Recruitment Made Easy</Text>
-          <Text style={styles.logintext3}>More than 3500+ jobs</Text>
-
-          {/* Login and View Job Categories Buttons with Icons */}
+          <Text style={[styles.logintext, { fontFamily: 'verdana' }]}>topjobs</Text>
+          <Text style={[styles.logintext2, { fontFamily: 'verdananormal' }]}>Recruitment Made Easy</Text>
+          <Text style={[styles.logintext3, { fontFamily: 'verdananormal' }]}>More than 3500+ jobs</Text>
           <View
             style={{
               flexDirection: "column",

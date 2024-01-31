@@ -4,14 +4,17 @@ import {
   Text,
   FlatList,
   StatusBar,
-  ActivityIndicator,
   TouchableOpacity,
   Linking,
+  ActivityIndicator,
 } from "react-native";
 import { parse } from "react-native-rss-parser";
-import styles from "../assets/styles/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import styles from "../assets/styles/styles";
 import AppNavigator from "./AppNavigator";
+import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 const RssFeedItemsScreen = ({ route, navigation }) => {
   const { rssLink } = route.params;
@@ -26,18 +29,12 @@ const RssFeedItemsScreen = ({ route, navigation }) => {
     );
   };
 
-  const toggleFavorite = async (item) => {
-    const updatedFavorites = favorites.includes(item)
-      ? favorites.filter((favorite) => favorite !== item)
-      : [...favorites, item];
-
-    setFavorites(updatedFavorites);
-
-    try {
-      // Save the updated favorites to AsyncStorage
-      await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-    } catch (error) {
-      console.error("Error saving favorites:", error);
+  const handleFavoriteToggle = (item) => {
+    const isFavorite = favorites.some((favItem) => favItem.title === item.title);
+    if (isFavorite) {
+      setFavorites(favorites.filter((favItem) => favItem.title !== item.title));
+    } else {
+      setFavorites([...favorites, item]);
     }
   };
 
@@ -53,21 +50,36 @@ const RssFeedItemsScreen = ({ route, navigation }) => {
       })
       .catch((error) => console.error("Error fetching RSS feed:", error))
       .finally(() => setLoading(false));
+  }, [rssLink, navigation]);
 
-    const loadFavorites = async () => {
-      try {
-        // Load favorites from AsyncStorage
-        const storedFavorites = await AsyncStorage.getItem("favorites");
-        if (storedFavorites) {
-          setFavorites(JSON.parse(storedFavorites));
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadFavorites = async () => {
+        try {
+          const favoritesData = await AsyncStorage.getItem("favorites");
+          if (favoritesData) {
+            setFavorites(JSON.parse(favoritesData));
+          }
+        } catch (error) {
+          console.error("Error loading favorites:", error);
         }
+      };
+
+      loadFavorites();
+    }, [])
+  );
+
+  useEffect(() => {
+    const saveFavorites = async () => {
+      try {
+        await AsyncStorage.setItem("favorites", JSON.stringify(favorites));
       } catch (error) {
-        console.error("Error loading favorites:", error);
+        console.error("Error saving favorites:", error);
       }
     };
 
-    loadFavorites();
-  }, [rssLink, navigation]);
+    saveFavorites();
+  }, [favorites]);
 
   return (
     <View style={styles.mainscontainer}>
@@ -78,27 +90,70 @@ const RssFeedItemsScreen = ({ route, navigation }) => {
         </View>
       ) : (
         <FlatList
+          style={styles.scrollView}
           data={rssItems}
           keyExtractor={(item, index) => `${item.title}-${index}`}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={styles.rssItemContainer}
+              style={[
+                styles.rssItemContainerDetail,
+                favorites.some((favItem) => favItem.title === item.title) &&
+                styles.favoriteItem,
+              ]}
               onPress={() => {
                 handleRssLinkClick(item);
               }}
             >
-              <Text>{item.title}</Text>
-              <Text>{item.description}</Text>
-              <TouchableOpacity
-                onPress={() => toggleFavorite(item)}
-                style={styles.rssLinkButton}
-              >
-                <Text>
-                  {favorites.includes(item)
-                    ? "Remove from Favorites"
-                    : "Add to Favorites"}
-                </Text>
-              </TouchableOpacity>
+              {favorites.some((favItem) => favItem.title === item.title) ? (
+                <LinearGradient
+                  colors={['#00912463', '#ffffff']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.gradientContainer}
+                >
+                  {/* Rest of your JSX for favorite items */}
+                  <View style={styles.rssItemTextContainer}>
+                    <View>
+                      <Text>{item.title}</Text>
+                      <Text>{item.description}</Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleFavoriteToggle(item);
+                      }}
+                    >
+                      <Ionicons
+                        name="heart"
+                        size={24}
+                        color="#900"
+                        style={styles.favico}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </LinearGradient>
+              ) : (
+                // JSX for non-favorite items
+                <View style={styles.gradientContainer}>
+                  <View style={styles.rssItemTextContainer}>
+                    <View>
+                      <Text>{item.title}</Text>
+                      <Text>{item.description}</Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleFavoriteToggle(item);
+                      }}
+                    >
+                      <Ionicons
+                        name="heart-outline"
+                        size={24}
+                        color="#900"
+                        style={styles.favico}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
             </TouchableOpacity>
           )}
           ListEmptyComponent={() => (
@@ -108,7 +163,7 @@ const RssFeedItemsScreen = ({ route, navigation }) => {
           )}
         />
       )}
-      <AppNavigator/>
+      <AppNavigator />
     </View>
   );
 };
