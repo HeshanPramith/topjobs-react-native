@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, StatusBar } from 'react-native';
-import AppNavigator from "./AppNavigator";
+import AppNavigator from "../configs/AppNavigator";
 import styles from "../assets/styles/styles";
 
 const LoginScreen = () => {

@@ -8,140 +8,145 @@ import {
   ActivityIndicator,
   Button,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import navigation hook
+import { useNavigation } from "@react-navigation/native";
 import Parser from "react-native-rss-parser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../assets/styles/styles";
-import AppNavigator from "./AppNavigator";
+import AppNavigator from "../configs/AppNavigator";
+import { useToast } from '@siteed/react-native-toaster';
+import Icon from "react-native-vector-icons/FontAwesome6";
 
 const MainScreen = () => {
   const navigation = useNavigation();
   const [rssData, setRssData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const toaster = useToast();
   const rssLinksWithAlias = [
     {
-      link: "http://www.topjobs.lk/feeds/legasy/it_sware_db_qa_web_graphics_gis.rss",
+      link: "http://192.168.8.101/feeds/legasy/it_sware_db_qa_web_graphics_gis.rss",
       alias: "IT Software",
+      icon: "pen-ruler",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/it_hware_networks_systems.rss",
+      link: "http://192.168.8.101/feeds/legasy/it_hware_networks_systems.rss",
       alias: "IT Hardware / Networks",
+      icon: "microchip",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/accounting_auditing_finance.rss",
+      link: "http://192.168.8.101/feeds/legasy/accounting_auditing_finance.rss",
       alias: "Accounting / Auditing / Finance",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/banking_insurance.rss",
+      link: "http://192.168.8.101/feeds/legasy/banking_insurance.rss",
       alias: "Banking / Insurance",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/sales_marketing_merchandising.rss",
+      link: "http://192.168.8.101/feeds/legasy/sales_marketing_merchandising.rss",
       alias: "Sales / Marketing / Merchandising",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/hr_training.rss",
+      link: "http://192.168.8.101/feeds/legasy/hr_training.rss",
       alias: "HR / Training",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/corporate_management_analysts.rss",
+      link: "http://192.168.8.101/feeds/legasy/corporate_management_analysts.rss",
       alias: "Corporate Management / Analysts",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/office_admin_secretary_receptionist.rss",
+      link: "http://192.168.8.101/feeds/legasy/office_admin_secretary_receptionist.rss",
       alias: "Office Admin / Secretarial",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/civil_eng_interior_design_architecture.rss",
+      link: "http://192.168.8.101/feeds/legasy/civil_eng_interior_design_architecture.rss",
       alias: "Civil Eng / Interior Design / Architecture",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/it_telecoms.rss",
+      link: "http://192.168.8.101/feeds/legasy/it_telecoms.rss",
       alias: "IT & Telecoms",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/customer_relations_public_relations.rss",
+      link: "http://192.168.8.101/feeds/legasy/customer_relations_public_relations.rss",
       alias: "Customer Relations / Public Relations",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/logistics_warehouse_transport.rss",
+      link: "http://192.168.8.101/feeds/legasy/logistics_warehouse_transport.rss",
       alias: "Logistics / Warehouse / Transport",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/eng_mech_auto_elec.rss",
+      link: "http://192.168.8.101/feeds/legasy/eng_mech_auto_elec.rss",
       alias: "Engineering / Mechanical / Auto / Electrical",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/manufacturing_operations.rss",
+      link: "http://192.168.8.101/feeds/legasy/manufacturing_operations.rss",
       alias: "Manufacturing / Operations",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/media_advert_communication.rss",
+      link: "http://192.168.8.101/feeds/legasy/media_advert_communication.rss",
       alias: "Media / Advertising / Communication",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/HOTELS_RESTAURANTS_HOSPITALITY.rss",
+      link: "http://192.168.8.101/feeds/legasy/HOTELS_RESTAURANTS_HOSPITALITY.rss",
       alias: "Hotels / Restaurants / Hospitality",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/TRAVEL_TOURISM.rss",
+      link: "http://192.168.8.101/feeds/legasy/TRAVEL_TOURISM.rss",
       alias: "Travel / Tourism",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/sports_fitness_recreation.rss",
+      link: "http://192.168.8.101/feeds/legasy/sports_fitness_recreation.rss",
       alias: "Sports / Fitness / Recreation",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/hospital_nursing_healthcare.rss",
+      link: "http://192.168.8.101/feeds/legasy/hospital_nursing_healthcare.rss",
       alias: "Hospital / Nursing / Healthcare",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/legal_law.rss",
+      link: "http://192.168.8.101/feeds/legasy/legal_law.rss",
       alias: "Legal / Law",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/supervision_quality_control.rss",
+      link: "http://192.168.8.101/feeds/legasy/supervision_quality_control.rss",
       alias: "Supervision / Quality Control",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/apparel_clothing.rss",
+      link: "http://192.168.8.101/feeds/legasy/apparel_clothing.rss",
       alias: "Apparel / Clothing",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/ticketing_airline_marine.rss",
+      link: "http://192.168.8.101/feeds/legasy/ticketing_airline_marine.rss",
       alias: "Ticketing / Airline / Marine",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/EDUCATION.rss",
+      link: "http://192.168.8.101/feeds/legasy/EDUCATION.rss",
       alias: "Education",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/rnd_science_research.rss",
+      link: "http://192.168.8.101/feeds/legasy/rnd_science_research.rss",
       alias: "R&D / Science / Research",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/agriculture_dairy_environment.rss",
+      link: "http://192.168.8.101/feeds/legasy/agriculture_dairy_environment.rss",
       alias: "Agriculture / Dairy / Environment",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/security.rss",
+      link: "http://192.168.8.101/feeds/legasy/security.rss",
       alias: "Security",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/fashion_design_beauty.rss",
+      link: "http://192.168.8.101/feeds/legasy/fashion_design_beauty.rss",
       alias: "Fashion Design / Beauty",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/international_development.rss",
+      link: "http://192.168.8.101/feeds/legasy/international_development.rss",
       alias: "International Development",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/kpo_bpo.rss",
+      link: "http://192.168.8.101/feeds/legasy/kpo_bpo.rss",
       alias: "KPO / BPO",
     },
     {
-      link: "http://www.topjobs.lk/feeds/legasy/imports_exports.rss",
+      link: "http://192.168.8.101/feeds/legasy/imports_exports.rss",
       alias: "Imports / Exports",
     },
   ];
@@ -168,7 +173,7 @@ const MainScreen = () => {
 
   const refreshCacheData = async () => {
     try {
-      setRefreshing(true); // Start refreshing indicator
+      setRefreshing(true);
       const data = await Promise.all(
         rssLinksWithAlias.map(async ({ link, alias }) => {
           try {
@@ -176,6 +181,7 @@ const MainScreen = () => {
             const text = await response.text();
             const parsedData = await Parser.parse(text);
             const itemCount = parsedData.items.length;
+
             return { link, alias, itemCount };
           } catch (error) {
             console.error(
@@ -192,12 +198,45 @@ const MainScreen = () => {
     } catch (error) {
       console.error("Error refreshing RSS item counts:", error);
     } finally {
-      setRefreshing(false); // Stop refreshing indicator
+      setRefreshing(false);
     }
   };
 
-  const handleRssLinkClick = (rssLink) => {
-    navigation.navigate("RssFeedItemsScreen", { rssLink });
+  const handleRssLinkClick = async (rssLink, alias) => {
+    try {
+      const response = await fetch(rssLink);
+      const text = await response.text();
+      const parsedData = await Parser.parse(text);
+      const itemCount = parsedData.items.length;
+
+      if (itemCount === 0) {
+        toaster.show({
+          message: 'All vacancies filled',
+          subMessage: 'No vacancies open at the moment.',
+          type: 'warning',
+          actionLabel: 'Close',
+          iconVisible: true,
+          iconStyle: {
+            fontSize: 30,
+          },
+          snackbarStyle: {
+            borderRadius: 10,
+          },
+          duration: 3000,
+          action() {
+
+          },
+          position: "middle",
+          subMessageStyle: {
+            color: '#FFFFFF',
+          },
+        });
+      } else {
+        navigation.navigate("RssFeedItemsScreen", { rssLink, alias });
+      }
+    } catch (error) {
+      console.error(`Error fetching or parsing RSS feed for ${alias}:`, error);
+    }
   };
 
   const getCachedData = async () => {
@@ -231,20 +270,34 @@ const MainScreen = () => {
         <ActivityIndicator size="large" color="#580000" />
       ) : (
         <ScrollView style={styles.scrollView}>
-          {rssData.map(({ link, alias, itemCount }) => (
+        {rssData.map(({ link, alias, itemCount }) => {
+          const rssLinkData = rssLinksWithAlias.find(data => data.link === link);
+          const iconName = rssLinkData?.icon || "briefcase";
+
+          return (
             <TouchableOpacity
               key={link}
-              onPress={() => handleRssLinkClick(link)}
+              onPress={() => handleRssLinkClick(link, alias)}
               style={styles.rssLinkButton}
             >
-              <Text>
-                {alias} - {itemCount}
-              </Text>
+              
+              <View style={styles.rssLinkButtonICon}>
+                <Icon name={iconName} size={20} color="#000" style={styles.iconStyle} />
+              </View>
+              <Text style={styles.rssLinkButtonTxt}>{alias}</Text>
+              <Text style={styles.rssLinkButtonCount}>{itemCount}</Text>
+              
+              {itemCount === 0 ? (
+                <View style={[styles.redCircleIndicator, styles.cirIndi]}></View>
+              ) : (
+                <View style={[styles.greenCircleIndicator, styles.cirIndi]}></View>
+              )}
             </TouchableOpacity>
-          ))}
-        </ScrollView>
+          );
+        })}
+      </ScrollView>
       )}
-      <AppNavigator/>
+      <AppNavigator />
     </View>
   );
 };

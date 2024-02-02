@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, FlatList, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Linking, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, FlatList, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Linking, ActivityIndicator, Image } from "react-native";
 import { parse } from "react-native-rss-parser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import styles from "../assets/styles/styles";
-import AppNavigator from "./AppNavigator";
+import AppNavigator from "../configs/AppNavigator";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useToast } from '@siteed/react-native-toaster';
 import { useNavigation } from "@react-navigation/native";
+import { Swipeable } from 'react-native-gesture-handler';
 
 const RssFeedItemsScreen = ({ route }) => {
-  const { rssLink } = route.params;
+  const { rssLink, alias } = route.params;
   const [rssItems, setRssItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState([]);
@@ -20,9 +21,10 @@ const RssFeedItemsScreen = ({ route }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRssItems, setFilteredRssItems] = useState([]);
   const [totalJobs, setTotalJobs] = useState(0);
+  const swipeableRefs = {};
 
   const handleRssLinkClick = (item) => {
-    const link = `https://www.topjobs.lk/employer/JobAdvertismentServlet?ac=${item.ac}&jc=${item.jc}&ec=${item.ec}`;
+    const link = `http://192.168.8.101/employer/JobAdvertismentServlet?ac=${item.itunes.subtitle}&jc=${item.itunes.block}&ec=${item.id}`;
     Linking.openURL(link).catch((err) =>
       console.error("Error opening link:", err)
     );
@@ -30,16 +32,16 @@ const RssFeedItemsScreen = ({ route }) => {
 
   const handleFavoriteToggle = (item) => {
     const isFavorite = favorites.some(
-      (favItem) => favItem.title === item.title
+      (favItem) => favItem.itunes.block === item.itunes.block
     );
     if (isFavorite) {
-      setFavorites(favorites.filter((favItem) => favItem.title !== item.title));
+      setFavorites(favorites.filter((favItem) => favItem.itunes.block !== item.itunes.block));
       toaster.show({
         message: 'Removed',
         subMessage: 'Favorite Item Removed',
         type: 'error',
         actionLabel: 'View Favorites',
-        iconVisible: true ,
+        iconVisible: true,
         iconStyle: {
           fontSize: 30,
           color: '#FFFFFF',
@@ -64,7 +66,7 @@ const RssFeedItemsScreen = ({ route }) => {
         subMessage: 'Added to favorites',
         type: 'success',
         actionLabel: 'View Favorites',
-        iconVisible: true ,
+        iconVisible: true,
         iconStyle: {
           fontSize: 30,
           color: '#FFFFFF',
@@ -83,6 +85,11 @@ const RssFeedItemsScreen = ({ route }) => {
         },
       });
     }
+
+    const swipeableRef = swipeableRefs[item.itunes.block];
+    if (swipeableRef) {
+      swipeableRef.close();
+    }
   };
 
   useEffect(() => {
@@ -92,12 +99,13 @@ const RssFeedItemsScreen = ({ route }) => {
       .then((response) => response.text())
       .then((responseData) => parse(responseData))
       .then((rss) => {
+        //console.log(rss);
         setRssItems(rss.items);
-        navigation.setOptions({ title: rss.title || "RSS Feed Items" });
+        navigation.setOptions({ title: alias || "RSS Feed Items" });
       })
       .catch((error) => console.error("Error fetching RSS feed:", error))
       .finally(() => setLoading(false));
-  }, [rssLink, navigation]);
+  }, [rssLink, alias, navigation]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -133,7 +141,7 @@ const RssFeedItemsScreen = ({ route }) => {
       rssItems.filter(
         (item) =>
           item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.description.toLowerCase().includes(searchQuery.toLowerCase())
+          item.itunes.duration.toLowerCase().includes(searchQuery.toLowerCase())
       )
     );
   }, [rssItems, searchQuery]);
@@ -145,11 +153,19 @@ const RssFeedItemsScreen = ({ route }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.mainscontainer} keyboardShouldPersistTaps="handled">
-        <Text>Total Jobs: {totalJobs}</Text>
+        <View style={styles.topbar}>
+          <Ionicons
+            name={"briefcase"}
+            size={20}
+            color="#000000"
+            style={styles.commicon}
+          />
+          <Text style={styles.jobtotal}>Total Jobs: {totalJobs}</Text>
+        </View>
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Search Your Dream Job"
+            placeholder="Search Your Dream Job Or Company"
             value={searchQuery}
             placeholderTextColor={'#000000'}
             fontSize={14}
@@ -169,61 +185,107 @@ const RssFeedItemsScreen = ({ route }) => {
             data={filteredRssItems.filter(
               (item) =>
                 item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                item.description.toLowerCase().includes(searchQuery.toLowerCase())
+                item.itunes.duration.toLowerCase().includes(searchQuery.toLowerCase())
             )}
-            keyExtractor={(item, index) => `${item.title}-${index}`}
+            keyExtractor={(item, index) => `${item.itunes.block}-${index}`}
             renderItem={({ item }) => (
-              <TouchableOpacity
-                style={[
-                  styles.rssItemContainerDetail,
-                  favorites.some((favItem) => favItem.title === item.title) &&
-                    styles.favoriteItem,
-                ]}
-                onPress={() => {
-                  handleRssLinkClick(item);
-                }}
-              >
-                <LinearGradient
-                  colors={["#ececec6c", "#FFFFFF"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={[
-                    styles.gradientContainer,
-                    favorites.some((favItem) => favItem.title === item.title) && {
-                      borderLeftColor: "#25c925",
-                      borderLeftWidth: 5,
-                    },
-                  ]}
-                >
-                  <View style={styles.rssItemTextContainer}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <View style={styles.rssLeftCon}>
-                        <Text>{item.title}</Text>
-                        <Text>{item.description}</Text>
-                      </View>
-                      <TouchableOpacity
-                        style={styles.rssRightCon}
-                        onPress={() => {
-                          handleFavoriteToggle(item);
-                        }}
-                      >
-                        <Ionicons
-                          name={
-                            favorites.some(
-                              (favItem) => favItem.title === item.title
-                            )
-                              ? "heart"
-                              : "heart-outline"
-                          }
-                          size={24}
-                          color="#25c925"
-                          style={styles.favico}
-                        />
-                      </TouchableOpacity>
+              <Swipeable
+                ref={(ref) => (swipeableRefs[item.itunes.block] = ref)}
+                renderRightActions={() => (
+                  <TouchableOpacity
+                    style={
+                      favorites.some((favItem) => favItem.itunes.block === item.itunes.block)
+                        ? styles.deleteButton
+                        : styles.saveButton
+                    }
+                    onPress={() => handleFavoriteToggle(item)}
+                  >
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Ionicons
+                        name={
+                          favorites.some(
+                            (favItem) => favItem.itunes.block === item.itunes.block
+                          )
+                            ? "close-circle"
+                            : "heart-outline"
+                        }
+                        size={24}
+                        color="#FFFFFF"
+                        style={styles.favico}
+                      />
+                      <Text style={styles.favTexter}>
+                        {favorites.some((favItem) => favItem.itunes.block === item.itunes.block)
+                          ? " Remove Favorites"
+                          : " Add to Favorites"}
+                      </Text>
                     </View>
-                  </View>
-                </LinearGradient>
-              </TouchableOpacity>
+                  </TouchableOpacity>
+                )}
+              >
+                <TouchableOpacity
+                  style={[
+                    styles.rssItemContainerDetail,
+                    favorites.some((favItem) => favItem.itunes.block === item.itunes.block) &&
+                    styles.favoriteItem,
+                  ]}
+                  onPress={() => {
+                    handleRssLinkClick(item);
+                  }}
+                >
+                  <LinearGradient
+                    colors={["#ececec6c", "#FFFFFF"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={[
+                      styles.gradientContainer,
+                      favorites.some((favItem) => favItem.itunes.block === item.itunes.block) && {
+                        borderLeftColor: "#25c925",
+                        borderLeftWidth: 5,
+                      },
+                    ]}
+                  >
+                    <View style={styles.rssItemTextContainer}>
+                      <View style={{ flexDirection: 'row' }}>
+                        <View style={styles.rssLeftConImg}>
+                          {item.itunes.summary ? (
+                            <Image
+                              source={{ uri: `http://192.168.8.101/logo/${item.itunes.summary}` }}
+                              style={{ width: '80%', height: 30, borderRadius: 5 }}
+                            />
+                          ) : (
+                            <Text>{item.itunes.summary}</Text>
+                          )}
+                        </View>
+                        <View style={styles.rssLeftCon}>
+                          <Text style={styles.rstxtttl}>{item.title}</Text>
+                          <Text style={styles.rstxt}>{item.description}</Text>
+                          <Text style={styles.rstxt}>{item.itunes.duration}</Text>
+                          <Text style={styles.rstxtloca}>{item.itunes.explicit}</Text>
+                          {item.categories.map((categoryObject, index) => (
+                            <Text style={styles.rstxtexp} key={index}>Exp : {categoryObject.name}</Text>
+                          ))}
+                        </View>
+                        {favorites.some((favItem) => favItem.itunes.block === item.itunes.block) && (
+                          <TouchableOpacity
+                            style={styles.rssRightCon}
+                            onPress={() => {
+                              handleFavoriteToggle(item);
+                            }}
+                          >
+                            <Ionicons
+                              name="heart"
+                              size={24}
+                              color="#25c925"
+                              style={styles.favico}
+                            />
+                          </TouchableOpacity>
+                        )}
+
+                      </View>
+                    </View>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </Swipeable>
             )}
             ListEmptyComponent={() => (
               <View style={styles.placeholderContainer}>

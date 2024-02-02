@@ -172,6 +172,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingBottom: 80,
   },
+  mainscontainerfav: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 80,
+    paddingTop: 5
+  },
   buttonContainer: {
     marginVertical: 10,
   },
@@ -185,6 +193,19 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: "#ececec6c",
     borderRadius: 5,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: "center",
+    justifyContent: 'flex-start',
+    overflow: "hidden"
+  },
+  rssLinkButtonCount:{
+    position: "absolute",
+    right: 20,
+    top: 14,
+    fontWeight: "bold",
+    color: '#000000'
   },
   bottomNavigator: {
     backgroundColor: "#8b0000",
@@ -270,23 +291,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffcc33',
     borderColor: "#ccc",
     borderWidth: 0,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
     paddingHorizontal: 16,
     color: '#000',
     position: "relative",
-    zIndex: 1
+    zIndex: 1,
   },
   searchIconContainer: {
     width: '10%',
     height: 50,
-    backgroundColor: '#ffcc33',
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 5,
+    backgroundColor: '#ffcc3300',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
     justifyContent: "center",
     color: '#FFF',
     position: "absolute",
@@ -294,8 +315,16 @@ const styles = StyleSheet.create({
     zIndex: 2,
     pointerEvents: "none"
   },
+  rssLeftConImg: {
+    width: '20%',
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
+    backgroundColor: '#FFF',
+    borderRadius: 5
+  },
   rssLeftCon: {
-    width: '87%'
+    width: '67%'
   },
   rssRightCon: {
     width: '13%',
@@ -316,6 +345,86 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000',
     marginTop: 30
+  },
+  jobtotal: {
+    padding: 15,
+    fontSize: 14
+  },  
+  topbar: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center"
+  }, 
+  rstxtttl: {
+    color: '#000000',
+    fontWeight: "500"
+  }, 
+  rstxt: {
+    fontSize: 12,
+    color: '#717171'
+  },
+  rstxtloca: {
+    fontSize: 12,
+    color: '#0164c2'
+  },
+  rstxtexp: {
+    fontSize: 12,
+    color: '#d30909'
+  },
+  favoriteItemContainer: {
+    width: '100%',
+    flex: 1,
+  },
+  deleteButton: {
+    backgroundColor: '#e40f0f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 180,
+    borderRadius: 10,
+    height: 80,
+    marginTop: 22,
+    paddingHorizontal: 15
+  },
+  saveButton: {
+    backgroundColor: '#03a333',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 180,
+    borderRadius: 10,
+    height: 80,
+    marginTop: 22,
+    paddingHorizontal: 15
+  },
+  favTexter: {
+    color: '#FFFFFF',
+  },
+  redCircleIndicator: {
+    width: 20,
+    height: 20,
+    borderRadius: 20,
+    backgroundColor: '#ffb700',
+    marginRight: 10, // Adjust the spacing as needed
+  },
+  greenCircleIndicator: {
+    width: 20,
+    height: 20,
+    borderRadius: 20,
+    backgroundColor: '#02c402',
+    marginRight: 10, // Adjust the spacing as needed
+  },
+  cirIndi: {
+    position: "absolute",
+    top: 15,
+    right: -25,
+    zIndex: -1
+  },
+  rssLinkButtonICon: {
+    width: 20,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    marginRight: 10
   },
 });
 
