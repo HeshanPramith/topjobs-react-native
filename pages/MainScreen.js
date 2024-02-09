@@ -7,6 +7,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Button,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Parser from "react-native-rss-parser";
@@ -15,6 +16,7 @@ import styles from "../assets/styles/styles";
 import AppNavigator from "../configs/AppNavigator";
 import { useToast } from '@siteed/react-native-toaster';
 import Icon from "react-native-vector-icons/FontAwesome6";
+import { Ionicons } from "@expo/vector-icons";
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -24,130 +26,159 @@ const MainScreen = () => {
   const toaster = useToast();
   const rssLinksWithAlias = [
     {
-      link: "http://192.168.8.101/feeds/legasy/it_sware_db_qa_web_graphics_gis.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/it_sware_db_qa_web_graphics_gis.rss",
       alias: "IT Software",
       icon: "pen-ruler",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/it_hware_networks_systems.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/it_hware_networks_systems.rss",
       alias: "IT Hardware / Networks",
       icon: "microchip",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/accounting_auditing_finance.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/accounting_auditing_finance.rss",
       alias: "Accounting / Auditing / Finance",
+      icon: "calculator",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/banking_insurance.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/banking_insurance.rss",
       alias: "Banking / Insurance",
+      icon: "building-columns",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/sales_marketing_merchandising.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/sales_marketing_merchandising.rss",
       alias: "Sales / Marketing / Merchandising",
+      icon: "users-between-lines",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/hr_training.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/hr_training.rss",
       alias: "HR / Training",
+      icon: "user-shield",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/corporate_management_analysts.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/corporate_management_analysts.rss",
       alias: "Corporate Management / Analysts",
+      icon: "chart-pie",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/office_admin_secretary_receptionist.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/office_admin_secretary_receptionist.rss",
       alias: "Office Admin / Secretarial",
+      icon: "building",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/civil_eng_interior_design_architecture.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/civil_eng_interior_design_architecture.rss",
       alias: "Civil Eng / Interior Design / Architecture",
+      icon: "person-shelter",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/it_telecoms.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/it_telecoms.rss",
       alias: "IT & Telecoms",
+      icon: "phone-volume",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/customer_relations_public_relations.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/customer_relations_public_relations.rss",
       alias: "Customer Relations / Public Relations",
+      icon: "people-arrows",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/logistics_warehouse_transport.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/logistics_warehouse_transport.rss",
       alias: "Logistics / Warehouse / Transport",
+      icon: "truck-arrow-right",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/eng_mech_auto_elec.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/eng_mech_auto_elec.rss",
       alias: "Engineering / Mechanical / Auto / Electrical",
+      icon: "screwdriver-wrench",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/manufacturing_operations.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/manufacturing_operations.rss",
       alias: "Manufacturing / Operations",
+      icon: "industry",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/media_advert_communication.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/media_advert_communication.rss",
       alias: "Media / Advertising / Communication",
+      icon: "video",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/HOTELS_RESTAURANTS_HOSPITALITY.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/HOTELS_RESTAURANTS_HOSPITALITY.rss",
       alias: "Hotels / Restaurants / Hospitality",
+      icon: "hotel",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/TRAVEL_TOURISM.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/TRAVEL_TOURISM.rss",
       alias: "Travel / Tourism",
+      icon: "person-walking-luggage",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/sports_fitness_recreation.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/sports_fitness_recreation.rss",
       alias: "Sports / Fitness / Recreation",
+      icon: "dumbbell",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/hospital_nursing_healthcare.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/hospital_nursing_healthcare.rss",
       alias: "Hospital / Nursing / Healthcare",
+      icon: "house-medical",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/legal_law.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/legal_law.rss",
       alias: "Legal / Law",
+      icon: "scale-balanced",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/supervision_quality_control.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/supervision_quality_control.rss",
       alias: "Supervision / Quality Control",
+      icon: "medal",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/apparel_clothing.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/apparel_clothing.rss",
       alias: "Apparel / Clothing",
+      icon: "vest-patches",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/ticketing_airline_marine.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/ticketing_airline_marine.rss",
       alias: "Ticketing / Airline / Marine",
+      icon: "plane-departure",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/EDUCATION.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/EDUCATION.rss",
       alias: "Education",
+      icon: "user-graduate",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/rnd_science_research.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/rnd_science_research.rss",
       alias: "R&D / Science / Research",
+      icon: "flask-vial",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/agriculture_dairy_environment.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/agriculture_dairy_environment.rss",
       alias: "Agriculture / Dairy / Environment",
+      icon: "tractor",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/security.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/security.rss",
       alias: "Security",
+      icon: "shield-halved",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/fashion_design_beauty.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/fashion_design_beauty.rss",
       alias: "Fashion Design / Beauty",
+      icon: "shirt",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/international_development.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/international_development.rss",
       alias: "International Development",
+      icon: "globe",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/kpo_bpo.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/kpo_bpo.rss",
       alias: "KPO / BPO",
+      icon: "book",
     },
     {
-      link: "http://192.168.8.101/feeds/legasy/imports_exports.rss",
+      link: "http://123.231.114.194:7181/feeds/legasy/imports_exports.rss",
       alias: "Imports / Exports",
+      icon: "arrow-right-arrow-left",
     },
   ];
 
@@ -260,42 +291,62 @@ const MainScreen = () => {
   return (
     <View style={styles.mainscontainer}>
       <View style={styles.buttonContainer}>
-        <Button
-          title={refreshing ? "Gathering New Data" : "Refresh"}
-          onPress={refreshCacheData}
-          disabled={refreshing}
-        />
+        <TouchableOpacity
+            onPress={refreshCacheData}
+            style={refreshing ? styles.lgiconButtonbgDeact : styles.lgiconButtonbg}
+            disabled={refreshing}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Ionicons
+                name="download"
+                size={20}
+                color="#000000"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={styles.buttonText2}>{refreshing ? "Gathering New Data" : "Latest Vacancies"}</Text>
+            </View>
+        </TouchableOpacity>
       </View>
       {refreshing ? (
-        <ActivityIndicator size="large" color="#580000" />
+
+        <Image
+          source={require('../assets/images/infinity.gif')}
+          style={{ width: 100, height: 100 }}
+        />
       ) : (
         <ScrollView style={styles.scrollView}>
-        {rssData.map(({ link, alias, itemCount }) => {
-          const rssLinkData = rssLinksWithAlias.find(data => data.link === link);
-          const iconName = rssLinkData?.icon || "briefcase";
+          {rssData.map(({ link, alias, itemCount }) => {
+            const rssLinkData = rssLinksWithAlias.find(data => data.link === link);
+            const iconName = rssLinkData?.icon || "briefcase";
 
-          return (
-            <TouchableOpacity
-              key={link}
-              onPress={() => handleRssLinkClick(link, alias)}
-              style={styles.rssLinkButton}
-            >
-              
-              <View style={styles.rssLinkButtonICon}>
-                <Icon name={iconName} size={20} color="#000" style={styles.iconStyle} />
-              </View>
-              <Text style={styles.rssLinkButtonTxt}>{alias}</Text>
-              <Text style={styles.rssLinkButtonCount}>{itemCount}</Text>
-              
-              {itemCount === 0 ? (
-                <View style={[styles.redCircleIndicator, styles.cirIndi]}></View>
-              ) : (
-                <View style={[styles.greenCircleIndicator, styles.cirIndi]}></View>
-              )}
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+            return (
+              <TouchableOpacity
+                key={link}
+                onPress={() => handleRssLinkClick(link, alias)}
+                style={styles.rssLinkButton}
+              >
+
+                <View style={styles.rssLinkButtonICon}>
+                  <Icon name={iconName} size={18} color="#000" style={styles.iconStyle} />
+                </View>
+                <Text style={styles.rssLinkButtonTxt}>{alias}</Text>
+                <Text style={styles.rssLinkButtonCount}>{itemCount}</Text>
+
+                {itemCount === 0 ? (
+                  <View style={[styles.redCircleIndicator, styles.cirIndi]}></View>
+                ) : (
+                  <View style={[styles.greenCircleIndicator, styles.cirIndi]}></View>
+                )}
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
       )}
       <AppNavigator />
     </View>
@@ -303,3 +354,4 @@ const MainScreen = () => {
 };
 
 export default MainScreen;
+

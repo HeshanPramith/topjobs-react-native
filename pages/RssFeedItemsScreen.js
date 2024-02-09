@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, FlatList, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Linking, ActivityIndicator, Image } from "react-native";
+import { View, Text, TextInput, FlatList, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Linking, ActivityIndicator, Image, Modal, ScrollView } from "react-native";
 import { parse } from "react-native-rss-parser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
@@ -21,10 +21,15 @@ const RssFeedItemsScreen = ({ route }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRssItems, setFilteredRssItems] = useState([]);
   const [totalJobs, setTotalJobs] = useState(0);
+  const [selectedLocationFilter, setSelectedLocationFilter] = useState(""); // State for selected location filter
+  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false); // State for filter modal visibility
+  const [lastSelectedLocation, setLastSelectedLocation] = useState(""); // State for last selected location
   const swipeableRefs = {};
 
+  const locationOptions = ["All Locations", ...new Set(rssItems.map(item => item.itunes.explicit))];
+
   const handleRssLinkClick = (item) => {
-    const link = `http://192.168.8.101/employer/JobAdvertismentServlet?ac=${item.itunes.subtitle}&jc=${item.itunes.block}&ec=${item.id}`;
+    const link = `http://123.231.114.194:7181/employer/JobAdvertismentServlet?ac=${item.itunes.subtitle}&jc=${item.itunes.block}&ec=${item.id}`;
     Linking.openURL(link).catch((err) =>
       console.error("Error opening link:", err)
     );
@@ -137,18 +142,31 @@ const RssFeedItemsScreen = ({ route }) => {
   }, [favorites]);
 
   useEffect(() => {
-    setFilteredRssItems(
-      rssItems.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.itunes.duration.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    // Filter items based on search query
+    const filteredItems = rssItems.filter(
+      (item) =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.itunes.duration.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [rssItems, searchQuery]);
+    // Sort filtered items based on location filter
+    const sortedItems = sortItemsByLocation(filteredItems, selectedLocationFilter);
+    setFilteredRssItems(sortedItems);
+    setTotalJobs(sortedItems.length);
+  }, [rssItems, searchQuery, selectedLocationFilter]);
 
   useEffect(() => {
     setTotalJobs(filteredRssItems.length);
   }, [filteredRssItems]);
+
+  const sortItemsByLocation = (items, location) => {
+    if (location === "" || location === "All Locations") {
+      // No location filter or "All Locations" selected, return items as is
+      return items;
+    } else {
+      // Sort items based on location filter
+      return items.filter(item => item.itunes.explicit === location);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -162,22 +180,74 @@ const RssFeedItemsScreen = ({ route }) => {
           />
           <Text style={styles.jobtotal}>Total Jobs: {totalJobs}</Text>
         </View>
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search Your Dream Job Or Company"
-            value={searchQuery}
-            placeholderTextColor={'#000000'}
-            fontSize={14}
-            onChangeText={(text) => setSearchQuery(text)}
-          />
-          <View style={styles.searchIconContainer}>
-            <Feather name="search" size={24} color="#000000" />
+        <View style={styles.headerContainer}>
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search Your Dream Job"
+              value={searchQuery}
+              placeholderTextColor={'#000000'}
+              fontSize={14}
+              onChangeText={(text) => setSearchQuery(text)}
+            />
+            <View style={styles.searchIconContainer}>
+              <Feather name="search" size={24} color="#000000" />
+            </View>
           </View>
+          <TouchableOpacity style={styles.filterButton} onPress={() => setIsFilterModalVisible(true)}>
+            {/* <Text>Filter by Location: {selectedLocationFilter || "All"}</Text> */}
+            <Ionicons
+            name={"location"}
+            style={styles.locatioIcon}
+          />
+          </TouchableOpacity>
         </View>
+        <Modal
+          visible={isFilterModalVisible}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={() => setIsFilterModalVisible(false)}
+        >
+          <TouchableWithoutFeedback onPress={() => setIsFilterModalVisible(false)}>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Select Job Location - {selectedLocationFilter || "All Locations"}</Text>
+                <ScrollView style={{ maxHeight: "100%" }}>
+                  {locationOptions.map(option => (
+                    <TouchableOpacity
+                      key={option}
+                      style={[
+                        styles.modalOption,
+                        option === lastSelectedLocation && styles.selectedLocationOption // Apply different style for last selected option
+                      ]}
+                      onPress={() => {
+                        setSelectedLocationFilter(option);
+                        setLastSelectedLocation(option); // Update last selected location
+                        setIsFilterModalVisible(false); // Close modal
+                      }}
+                    >
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text style={[
+                        styles.modalOptionItm,
+                        option === lastSelectedLocation && styles.modalOptionItmCheck // Apply different style for last selected option
+                      ]}>{option}</Text>
+                        {option === selectedLocationFilter && (
+                          <Ionicons name="checkmark-circle" size={20} color="#25c925" style={{ marginLeft: 10 }} />
+                        )}
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
         {loading ? (
           <View style={styles.activityIndicatorContainer}>
-            <ActivityIndicator size="large" color="#580000" />
+            <Image
+              source={require('../assets/images/infinity.gif')}
+              style={{ width: 100, height: 100 }}
+            />
           </View>
         ) : (
           <FlatList
@@ -249,7 +319,7 @@ const RssFeedItemsScreen = ({ route }) => {
                         <View style={styles.rssLeftConImg}>
                           {item.itunes.summary ? (
                             <Image
-                              source={{ uri: `http://192.168.8.101/logo/${item.itunes.summary}` }}
+                              source={{ uri: `http://123.231.114.194:7181/logo/${item.itunes.summary}` }}
                               style={{ width: '80%', height: 30, borderRadius: 5 }}
                             />
                           ) : (

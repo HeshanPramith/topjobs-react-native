@@ -88,7 +88,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "500",
   },
-
+  buttonText2: {
+    color: "#000000",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "500",
+  },
   iconcolorred: {
     color: "#8b0000",
   },
@@ -99,17 +104,47 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: 20,
   },
-  lgiconButtonbg: {
+  lgiconButtonbgLog: {
     textAlign: "center",
     backgroundColor: "#8b0000",
     borderRadius: 30,
-    paddingHorizontal: 20,
     color: "#000000",
     elevation: 5,
     shadowColor: "#8b0000",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
+    shadowRadius: 30,
+    padding: 10,
+    paddingHorizontal: 20 ,
+    margin: 10,
+  },
+  lgiconButtonbg: {
+    textAlign: "center",
+    backgroundColor: "#ffcc33",
+    borderRadius: 30,
+    color: "#000000",
+    elevation: 5,
+    shadowColor: "#ffcc33",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
     shadowRadius: 10,
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+  },
+  lgiconButtonbgDeact: {
+    textAlign: "center",
+    backgroundColor: "#cacaca",
+    borderRadius: 30,
+    color: "#000000",
+    elevation: 5,
+    shadowColor: "#cacaca",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
   },
   jciconButtonbg: {
     textAlign: "center",
@@ -191,6 +226,7 @@ const styles = StyleSheet.create({
   rssLinkButton: {
     marginBottom: 10,
     padding: 15,
+    paddingLeft: 10,
     backgroundColor: "#ececec6c",
     borderRadius: 5,
 
@@ -277,7 +313,7 @@ const styles = StyleSheet.create({
     //marginTop: 6
   },
   searchContainer: {
-    width: '100%',
+    width: '95%',
     height: 50,
     backgroundColor: '#FFF',
     marginBottom: 10,
@@ -420,11 +456,78 @@ const styles = StyleSheet.create({
     zIndex: -1
   },
   rssLinkButtonICon: {
-    width: 20,
+    width: 23,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
     marginRight: 10
+  },
+  indica: {
+    width: 200,
+    height: 200
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    width: "80%",
+    height: "80%",
+    maxHeight: "80%",
+    overflow: "hidden",
+  },
+  modalTitle: {
+    fontSize: 16,
+    fontWeight: "500",
+    padding: 15,
+    width: "100%",
+    borderBottomWidth: 1,
+    borderBottomColor: "#f1f1f1",
+  },
+  modalOption: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f1f1f185",
+    width: "100%",
+    alignItems: "flex-start",
+  },
+  modalOptionText: {
+    fontSize: 14,
+  },
+  selectedLocationOption: {
+    //backgroundColor: '#ECECEC',
+  },
+  modalOptionItm: {
+    flex: 1,
+    textAlign: "left",
+    color: "#8d8d8d",
+    fontSize: 14,
+  },
+  modalOptionItmCheck: {
+    fontWeight: "500",
+    color: "#25c925",
+    fontSize: 18,
+  },
+
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  filterButton: {
+    width: "10%",
+  },
+  locatioIcon: {
+    fontSize: 30,
+    marginTop: -10,
+    color: "#117ebd"
   },
 });
 

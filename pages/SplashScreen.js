@@ -76,7 +76,7 @@ const SplashScreen = () => {
           >
             <TouchableOpacity
               onPress={handleLoginPress}
-              style={[styles.button, styles.lgiconButtonbg]}
+              style={[styles.button, styles.lgiconButtonbgLog]}
             >
               <View
                 style={{

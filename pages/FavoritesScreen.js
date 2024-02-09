@@ -104,7 +104,7 @@ const FavoritesScreen = ({ }) => {
                     <View style={styles.rssLeftConImg}>
                       {item.itunes.summary ? (
                         <Image
-                          source={{ uri: `http://192.168.8.101/logo/${item.itunes.summary}` }}
+                          source={{ uri: `http://123.231.114.194:7181/logo/${item.itunes.summary}` }}
                           style={{ width: '80%', height: 30, borderRadius: 5 }}
                         />
                       ) : (
