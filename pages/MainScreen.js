@@ -62,7 +62,7 @@ const MainScreen = () => {
     },
     {
       link: "http://123.231.114.194:7181/feeds/legasy/office_admin_secretary_receptionist.rss",
-      alias: "Office Admin / Secretarial",
+      alias: "Office Admin / Secretary",
       icon: "building",
     },
     {
