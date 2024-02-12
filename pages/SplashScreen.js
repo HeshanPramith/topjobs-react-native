@@ -42,7 +42,7 @@ const SplashScreen = () => {
       },
       duration: 8000,
       action() {
-        
+
       },
       position: "bottom",
       subMessageStyle: {

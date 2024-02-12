@@ -5,8 +5,8 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
-  Button,
+  //ActivityIndicator,
+  //Button,
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -292,25 +292,25 @@ const MainScreen = () => {
     <View style={styles.mainscontainer}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-            onPress={refreshCacheData}
-            style={refreshing ? styles.lgiconButtonbgDeact : styles.lgiconButtonbg}
-            disabled={refreshing}
+          onPress={refreshCacheData}
+          style={refreshing ? styles.lgiconButtonbgDeact : styles.lgiconButtonbg}
+          disabled={refreshing}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Ionicons
-                name="download"
-                size={20}
-                color="#000000"
-                style={{ marginRight: 10 }}
-              />
-              <Text style={styles.buttonText2}>{refreshing ? "Gathering New Data" : "Latest Vacancies"}</Text>
-            </View>
+            <Ionicons
+              name="download"
+              size={20}
+              color="#000000"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={styles.buttonText2}>{refreshing ? "Gathering New Data" : "Latest Vacancies"}</Text>
+          </View>
         </TouchableOpacity>
       </View>
       {refreshing ? (

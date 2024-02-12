@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 30,
     padding: 10,
-    paddingHorizontal: 20 ,
+    paddingHorizontal: 20,
     margin: 10,
   },
   lgiconButtonbg: {
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     overflow: "hidden"
   },
-  rssLinkButtonCount:{
+  rssLinkButtonCount: {
     position: "absolute",
     right: 20,
     top: 14,
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     borderRadius: 30,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   bottomNavBtn: {
     marginHorizontal: 0,
@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
   },
   rssItemTextContainer: {
     padding: 15,
+    paddingRight: 0,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
@@ -313,7 +314,7 @@ const styles = StyleSheet.create({
     //marginTop: 6
   },
   searchContainer: {
-    width: '95%',
+    width: '85%',
     height: 50,
     backgroundColor: '#FFF',
     marginBottom: 10,
@@ -337,7 +338,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   searchIconContainer: {
-    width: '10%',
+    width: '12%',
     height: 50,
     backgroundColor: '#ffcc3300',
     borderTopLeftRadius: 30,
@@ -357,17 +358,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 10,
     backgroundColor: '#FFF',
-    borderRadius: 5
+    borderRadius: 5,
   },
   rssLeftCon: {
-    width: '67%'
+    width: '70%',
+    paddingRight: 15
   },
   rssRightCon: {
-    width: '13%',
+    width: '10%',
     height: 'auto',
     flex: 1,
     alignItems: "flex-end",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignContent: 'center',
+  },
+  rssRightConIconButton: {
+    justifyContent: 'center', // align items vertically
+    alignItems: 'center', // align items horizontally
+    marginRight: 0, // Add some margin between the icons if needed
   },
   placeholderContainer: {
     flex: 1,
@@ -385,17 +393,17 @@ const styles = StyleSheet.create({
   jobtotal: {
     padding: 15,
     fontSize: 14
-  },  
+  },
   topbar: {
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center"
-  }, 
+  },
   rstxtttl: {
     color: '#000000',
     fontWeight: "500"
-  }, 
+  },
   rstxt: {
     fontSize: 12,
     color: '#717171'
@@ -406,7 +414,8 @@ const styles = StyleSheet.create({
   },
   rstxtexp: {
     fontSize: 12,
-    color: '#d30909'
+    color: '#d30909',
+    fontWeight: '500',
   },
   favoriteItemContainer: {
     width: '100%',
@@ -418,8 +427,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 180,
     borderRadius: 10,
-    height: 80,
-    marginTop: 22,
+    height: 97,
+    marginTop: 6,
     paddingHorizontal: 15
   },
   saveButton: {
@@ -428,8 +437,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 180,
     borderRadius: 10,
-    height: 80,
-    marginTop: 22,
+    height: 97,
+    marginTop: 6,
     paddingHorizontal: 15
   },
   favTexter: {
@@ -476,9 +485,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     width: "80%",
-    height: "80%",
+    height: "auto",
     maxHeight: "80%",
     overflow: "hidden",
+    elevation: 20,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 50,
   },
   modalTitle: {
     fontSize: 16,
@@ -498,6 +512,42 @@ const styles = StyleSheet.create({
   },
   modalOptionText: {
     fontSize: 14,
+  },
+  modalContentData: {
+    padding: 15
+  },
+  modalContentFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    paddingHorizontal: 20,
+    borderTopWidth: 1,
+    borderTopColor: "#f1f1f1",
+    padding: 15,
+    paddingHorizontal: 12,
+    width: '100%'
+  },
+  closeQuickViewButton: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    width: '30%',
+    alignItems: 'center',
+  },
+  closeQuickViewButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  openVacancyButton: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+    width: '65%',
+    alignItems: 'center',
+  },
+  openVacancyButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   selectedLocationOption: {
     //backgroundColor: '#ECECEC',
@@ -528,6 +578,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginTop: -10,
     color: "#117ebd"
+  },
+  modalTitleSub: {
+    color: '#a70000',
+    fontWeight: '500'
+  },
+  map: {
+    width: '100%',
+    height: 200, // Adjust the height as needed
   },
 });
 
