@@ -10,6 +10,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useToast } from '@siteed/react-native-toaster';
 import { useNavigation } from "@react-navigation/native";
 import { Swipeable } from 'react-native-gesture-handler';
+import MapView, { Marker } from 'react-native-maps';
+import axios from 'axios';
 
 const RssFeedItemsScreen = ({ route }) => {
   const { rssLink, alias } = route.params;
@@ -461,6 +463,17 @@ const RssFeedItemsScreen = ({ route }) => {
                 <ScrollView contentContainerStyle={styles.quickViewContent}>
                   {quickViewData && (
                     <>
+                      <View style={styles.rssLeftConImgPopup}>
+                        {quickViewData.itunes.summary ? (
+                          <Image
+                            source={{ uri: `http://123.231.114.194:7181/logo/${quickViewData.itunes.summary}` }}
+                            style={{ width: 100, height: 50  }}
+                            resizeMode="contain"
+                          />
+                        ) : (
+                          <Text>{quickViewData.itunes.summary}</Text>
+                        )}
+                      </View>
                       <Text style={styles.quickViewTitle}>{quickViewData.title.trim().replace(/\s+/g, ' ')}</Text>
                       <Text style={styles.quickViewDescription}>{quickViewData.description}</Text>
                       <Text style={styles.quickViewDuration}>{quickViewData.itunes.duration}</Text>
@@ -469,7 +482,20 @@ const RssFeedItemsScreen = ({ route }) => {
                         <Text style={styles.rstxtexp} key={index}>{categoryObject.name}</Text>
                       ))}
                       <Text style={styles.quickViewDuration}>{orderAliasMapping[quickViewData.itunes.order]}</Text>
-                      {/* Add other details here */}
+
+                      <TouchableOpacity
+                        style={styles.openGoogleMapsButton}
+                        onPress={() => {
+                          const query = encodeURIComponent(quickViewData.itunes.duration + ' Sri Lanka');
+                          const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
+                          Linking.openURL(googleMapsUrl).catch((err) =>
+                            console.error('Error opening Google Maps:', err)
+                          );
+                        }}
+                      >
+                        <Text style={styles.openGoogleMapsButtonText}>Open in Google Maps</Text>
+                      </TouchableOpacity>
+                      <View><Text>Show Map Here</Text></View>
                     </>
                   )}
                 </ScrollView>

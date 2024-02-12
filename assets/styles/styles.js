@@ -360,22 +360,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 5,
   },
+  rssLeftConImgPopup: {
+    width: '100%',
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
+    backgroundColor: '#FFF',
+    borderRadius: 5,
+  },
   rssLeftCon: {
-    width: '70%',
+    width: '67%',
     paddingRight: 15
   },
   rssRightCon: {
-    width: '10%',
+    width: '13%',
     height: 'auto',
     flex: 1,
-    alignItems: "flex-end",
+    alignItems: "center",
     justifyContent: "center",
     alignContent: 'center',
   },
   rssRightConIconButton: {
-    justifyContent: 'center', // align items vertically
-    alignItems: 'center', // align items horizontally
-    marginRight: 0, // Add some margin between the icons if needed
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   placeholderContainer: {
     flex: 1,
@@ -427,7 +434,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 180,
     borderRadius: 10,
-    height: 97,
+    height: 96,
     marginTop: 6,
     paddingHorizontal: 15
   },
