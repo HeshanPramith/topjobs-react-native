@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, FlatList, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Linking, ActivityIndicator, Image, Modal, ScrollView, } from "react-native";
+import { View, Text, TextInput, FlatList, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Linking, Image, Modal, ScrollView, } from "react-native";
 import { parse } from "react-native-rss-parser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
@@ -10,7 +10,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useToast } from '@siteed/react-native-toaster';
 import { useNavigation } from "@react-navigation/native";
 import { Swipeable } from 'react-native-gesture-handler';
-import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
 
 const RssFeedItemsScreen = ({ route }) => {
@@ -28,12 +27,40 @@ const RssFeedItemsScreen = ({ route }) => {
   const [lastSelectedLocation, setLastSelectedLocation] = useState(""); // State for last selected location
   const [selectedOrderFilter, setSelectedOrderFilter] = useState(""); // State for selected order filter
   const [isOrderModalVisible, setIsOrderModalVisible] = useState(false); // State for order modal visibility
-  const [quickViewData, setQuickViewData] = useState(null); // State for quick view popup data
-  const [isQuickViewVisible, setIsQuickViewVisible] = useState(false); // State for quick view popup visibility
+  const [quickViewData] = useState(null); // State for quick view popup data
   const swipeableRefs = {};
 
   const locationOptions = ["All Locations", ...new Set(rssItems.map(item => item.itunes.explicit))];
   const orderOptions = ["All Job Types", ...new Set(rssItems.map(item => item.itunes.order))];
+
+  const [setLatitude] = useState(null);
+  const [setLongitude] = useState(null);
+
+  const handleJobItemPress = (item) => {
+    navigation.navigate('JobDetailView', { jobData: item });
+  };
+
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      try {
+        if (quickViewData && quickViewData.itunes && quickViewData.itunes.explicit) {
+          const location = encodeURIComponent(quickViewData.itunes.explicit + ', Sri Lanka');
+          const apiKey = 'e198933baaa244ca9173d6be9f553c0f'; // Replace 'YOUR_API_KEY' with your actual API key
+          const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${apiKey}`);
+          
+          if (response.data && response.data.results.length > 0) {
+            const { lat, lng } = response.data.results[0].geometry;
+            setLatitude(lat);
+            setLongitude(lng);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching coordinates:", error);
+      }
+    };
+  
+    fetchCoordinates();
+  }, [quickViewData]);
 
   const orderAliasMapping = {
     '5': 'Private Full time',
@@ -42,11 +69,6 @@ const RssFeedItemsScreen = ({ route }) => {
     '10': 'Government Part time',
     '17': 'NGO Full time',
     '18': 'NGO Part time'
-  };
-
-  const handleQuickView = (item) => {
-    setQuickViewData(item);
-    setIsQuickViewVisible(true);
   };
 
   const handleRssLinkClick = (item) => {
@@ -426,7 +448,8 @@ const RssFeedItemsScreen = ({ route }) => {
                           )}
                           <TouchableOpacity
                             style={styles.rssRightConIconButton}
-                            onPress={() => handleQuickView(item)}
+                            // onPress={() => handleQuickView(item)}
+                            onPress={() => handleJobItemPress(item)}
                           >
                             <Ionicons
                               name="eye-sharp"
@@ -449,73 +472,7 @@ const RssFeedItemsScreen = ({ route }) => {
             )}
           />
         )}
-        <AppNavigator />
-        <Modal
-          visible={isQuickViewVisible}
-          animationType="fade"
-          transparent={true}
-          onRequestClose={() => setIsQuickViewVisible(false)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Vacancy Quick View</Text>
-              <View style={styles.modalContentData}>
-                <ScrollView contentContainerStyle={styles.quickViewContent}>
-                  {quickViewData && (
-                    <>
-                      <View style={styles.rssLeftConImgPopup}>
-                        {quickViewData.itunes.summary ? (
-                          <Image
-                            source={{ uri: `http://123.231.114.194:7181/logo/${quickViewData.itunes.summary}` }}
-                            style={{ width: 100, height: 50  }}
-                            resizeMode="contain"
-                          />
-                        ) : (
-                          <Text>{quickViewData.itunes.summary}</Text>
-                        )}
-                      </View>
-                      <Text style={styles.quickViewTitle}>{quickViewData.title.trim().replace(/\s+/g, ' ')}</Text>
-                      <Text style={styles.quickViewDescription}>{quickViewData.description}</Text>
-                      <Text style={styles.quickViewDuration}>{quickViewData.itunes.duration}</Text>
-                      <Text style={styles.quickViewDuration}>{quickViewData.itunes.explicit}</Text>
-                      {quickViewData.categories.map((categoryObject, index) => (
-                        <Text style={styles.rstxtexp} key={index}>{categoryObject.name}</Text>
-                      ))}
-                      <Text style={styles.quickViewDuration}>{orderAliasMapping[quickViewData.itunes.order]}</Text>
-
-                      <TouchableOpacity
-                        style={styles.openGoogleMapsButton}
-                        onPress={() => {
-                          const query = encodeURIComponent(quickViewData.itunes.duration + ' Sri Lanka');
-                          const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
-                          Linking.openURL(googleMapsUrl).catch((err) =>
-                            console.error('Error opening Google Maps:', err)
-                          );
-                        }}
-                      >
-                        <Text style={styles.openGoogleMapsButtonText}>Open in Google Maps</Text>
-                      </TouchableOpacity>
-                      <View><Text>Show Map Here</Text></View>
-                    </>
-                  )}
-                </ScrollView>
-              </View>
-              <View style={styles.modalContentFooter}>
-                <TouchableOpacity style={styles.closeQuickViewButton} onPress={() => setIsQuickViewVisible(false)}>
-                  <Text style={styles.closeQuickViewButtonText}>Close</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.openVacancyButton}
-                  onPress={() => {
-                    handleRssLinkClick(quickViewData);
-                  }}
-                >
-                  <Text style={styles.openVacancyButtonText}>Open Vacancy</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
+        <AppNavigator />        
       </View>
     </TouchableWithoutFeedback>
   );

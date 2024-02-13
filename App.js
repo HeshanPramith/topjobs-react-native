@@ -6,6 +6,7 @@ import MainScreen from './pages/MainScreen';
 import LoginScreen from './pages/LoginScreen';
 import RssFeedItemsScreen from './pages/RssFeedItemsScreen';
 import FavoritesScreen from './pages/FavoritesScreen';
+import JobDetailView from './pages/JobDetailView';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ToastProvider } from '@siteed/react-native-toaster';
 
@@ -76,6 +77,22 @@ export default function App() {
               component={FavoritesScreen}
               options={{
                 title: 'My Favorites',
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                  color: '#FFFFFF',
+                  fontSize: 16,
+                },
+                headerStyle: {
+                  backgroundColor: '#8b0000',
+                },
+                headerTintColor: '#FFFFFF',
+              }}
+            />
+            <Stack.Screen
+              name="JobDetailView"
+              component={JobDetailView}
+              options={{
+                title: 'Vacancy View',
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
                   color: '#FFFFFF',

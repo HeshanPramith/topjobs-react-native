@@ -215,6 +215,16 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
     paddingTop: 5
   },
+  mainsContainerDetail: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "flex-start",
+    paddingBottom: 80,
+    paddingHorizontal: 15,
+    height: '100%'
+  },
   buttonContainer: {
     marginVertical: 10,
   },
@@ -365,6 +375,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
+    marginBottom: 10,
     backgroundColor: '#FFF',
     borderRadius: 5,
   },
@@ -444,7 +455,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 180,
     borderRadius: 10,
-    height: 97,
+    height: 96,
     marginTop: 6,
     paddingHorizontal: 15
   },
@@ -535,26 +546,44 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   closeQuickViewButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#e9e9e957',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 30,
     width: '30%',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: "#e2e2e2",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
   },
   closeQuickViewButtonText: {
-    color: 'white',
+    color: '#292929',
     fontWeight: 'bold',
   },
+  closeQuickViewButtonIcon: {
+    color: '#292929',
+    fontSize: 16,
+    marginRight: 10
+  },
   openVacancyButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#02c402',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 30,
     width: '65%',
     alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
   },
   openVacancyButtonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  openVacancyButtonIcon: {
+    color: 'white',
+    fontSize: 16,
+    marginRight: 10
   },
   selectedLocationOption: {
     //backgroundColor: '#ECECEC',
@@ -592,7 +621,22 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: 200, // Adjust the height as needed
+    height: 300,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  mapContainer: {
+    width: '100%',
+    height: 300,
+    //flex: 1,
+    marginTop: 15,
+    borderRadius: 10, // Adjust the border radius as needed
+    backgroundColor: "#f8f8f894", // Adjust the background color as needed
+    overflow: "hidden", // This ensures the border radius is applied correctly
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
   },
 });
 

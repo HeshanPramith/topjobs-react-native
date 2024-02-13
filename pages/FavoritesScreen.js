@@ -112,14 +112,19 @@ const FavoritesScreen = ({ }) => {
                       )}
                     </View>
                     <View style={styles.rssLeftCon}>
-                      <Text style={styles.rstxtttl}>{item.title}</Text>
+                      <Text style={[styles.rstxtttl, { flex: 1 }]} numberOfLines={1} ellipsizeMode="tail">
+                        {item.title.trim().replace(/\s+/g, ' ')}
+                      </Text>
                       <Text style={styles.rstxt}>{item.description}</Text>
                       <Text style={styles.rstxt}>{item.itunes.duration}</Text>
-                      <Text style={styles.rstxtloca}>{item.itunes.explicit}</Text>
-                      {item.categories.map((categoryObject, index) => (
-                        <Text style={styles.rstxtexp} key={index}>Exp : {categoryObject.name}</Text>
-                      ))}
-                    </View></View>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.rstxtloca}>{item.itunes.explicit}</Text>
+                        {item.categories.map((categoryObject, index) => (
+                          <Text style={styles.rstxtexp} key={index}> • {categoryObject.name}</Text>
+                        ))}
+                      </View>
+                    </View>
+                  </View>
                 </View>
 
               </LinearGradient>
