@@ -213,6 +213,26 @@ const RssFeedItemsScreen = ({ route }) => {
     return filteredItems;
   };
 
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // Function to render location text with popup for multiple towns
+  const renderLocationText = (item) => {
+    if (item.itunes.explicit.includes(',')) {
+      const towns = item.itunes.explicit.split(',');
+      return (
+        <TouchableOpacity onPress={() => setSelectedItem(item)}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.rstxtloca}>{towns[0]}</Text>
+            <Text style={styles.rstxtloca}>, +{towns.length - 1} more</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    } else {
+      return <Text style={styles.rstxtloca}>{item.itunes.explicit}</Text>;
+    }
+  };
+  
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.mainscontainer} keyboardShouldPersistTaps="handled">
@@ -424,7 +444,7 @@ const RssFeedItemsScreen = ({ route }) => {
                           <Text style={styles.rstxt}>{item.description}</Text>
                           <Text style={styles.rstxt}>{item.itunes.duration}</Text>
                           <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.rstxtloca}>{item.itunes.explicit}</Text>
+                            <Text style={styles.rstxtloca}>{renderLocationText(item)}</Text>
                             {item.categories.map((categoryObject, index) => (
                               <Text style={styles.rstxtexp} key={index}> • {categoryObject.name}</Text>
                             ))}
@@ -472,7 +492,33 @@ const RssFeedItemsScreen = ({ route }) => {
             )}
           />
         )}
-        <AppNavigator />        
+        <AppNavigator />   
+        <Modal
+          visible={selectedItem !== null}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={() => setSelectedItem(null)}
+        >
+          <TouchableWithoutFeedback onPress={() => setSelectedItem(null)}>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={styles.modalTitle}>All Towns</Text>
+                  <TouchableOpacity onPress={() => setSelectedItem(null)} style={styles.closeButtonTown}>
+                    <Ionicons name="close-circle-outline" size={24} color="#000" />
+                  </TouchableOpacity>
+                </View>
+                <ScrollView style={{ maxHeight: "100%", height: 'auto' }}>
+                  {selectedItem && selectedItem.itunes.explicit.split(',').map((town, index) => (
+                    <View style={styles.townWrapper} key={index}>
+                      <Text style={styles.modalOptionItm}>{town.trim()}</Text>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
     </TouchableWithoutFeedback>
   );

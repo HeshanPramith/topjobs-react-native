@@ -100,6 +100,7 @@ export default function App() {
                 },
                 headerStyle: {
                   backgroundColor: '#8b0000',
+                  elevation: 0
                 },
                 headerTintColor: '#FFFFFF',
               }}
