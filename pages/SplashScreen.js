@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import * as Font from "expo-font";
+import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../assets/styles/styles";
 import { useToast } from '@siteed/react-native-toaster';
@@ -15,17 +15,15 @@ import { useToast } from '@siteed/react-native-toaster';
 const SplashScreen = () => {
   const navigation = useNavigation();
 
+  const [fontsLoaded] = useFonts({
+    verdana: require("../assets/fonts/verdana.ttf"),
+    verdanaBold: require("../assets/fonts/verdana-bold.ttf"),
+  });
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    async function loadFont() {
-      await Font.loadAsync({
-        verdana: require("../assets/fonts/verdana-bold.ttf"),
-        verdananormal: require("../assets/fonts/verdana.ttf"),
-      });
-    }
-
     StatusBar.setBarStyle("dark-content");
-
-    loadFont();
+    setLoading(false);
   }, []);
 
   const toaster = useToast();
@@ -56,6 +54,10 @@ const SplashScreen = () => {
     navigation.navigate("Main");
   };
 
+  if (!fontsLoaded || loading) {
+    return null;
+  }
+
   return (
 
     <View style={styles.spcon}>
@@ -64,9 +66,9 @@ const SplashScreen = () => {
         style={styles.backgroundImage}
       >
         <View style={styles.spcon}>
-          <Text style={[styles.logintext, { fontFamily: 'verdana' }]}>topjobs</Text>
-          <Text style={[styles.logintext2, { fontFamily: 'verdananormal' }]}>Recruitment Made Easy</Text>
-          <Text style={[styles.logintext3, { fontFamily: 'verdananormal' }]}>More than 3500+ jobs</Text>
+          <Text style={[styles.logintext, { fontFamily: 'verdanaBold' }]}>topjobs</Text>
+          <Text style={[styles.logintext2, { fontFamily: 'verdana' }]}>Recruitment Made Easy</Text>
+          <Text style={[styles.logintext3, { fontFamily: 'verdana' }]}>More than 3500+ jobs</Text>
           <View
             style={{
               flexDirection: "column",

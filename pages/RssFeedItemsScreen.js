@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TextInput, FlatList, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Linking, Image, Modal, ScrollView, } from "react-native";
 import { parse } from "react-native-rss-parser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -36,9 +36,9 @@ const RssFeedItemsScreen = ({ route }) => {
   const [setLatitude] = useState(null);
   const [setLongitude] = useState(null);
 
-  const handleJobItemPress = (item) => {
+  const handleJobItemPress = useCallback((item) => {
     navigation.navigate('JobDetailView', { jobData: item });
-  };
+  }, [navigation]);
 
   useEffect(() => {
     const fetchCoordinates = async () => {
@@ -156,7 +156,7 @@ const RssFeedItemsScreen = ({ route }) => {
   }, [rssLink, alias, navigation]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const loadFavorites = async () => {
         try {
           const favoritesData = await AsyncStorage.getItem("favorites");
@@ -441,7 +441,7 @@ const RssFeedItemsScreen = ({ route }) => {
                           <Text style={[styles.rstxtttl, { flex: 1 }]} numberOfLines={1} ellipsizeMode="tail">
                             {item.title.trim().replace(/\s+/g, ' ')}
                           </Text>
-                          <Text style={styles.rstxt}>{item.description}</Text>
+                          <Text style={[styles.rstxt]} numberOfLines={1} ellipsizeMode="tail">{item.description}</Text>
                           <Text style={styles.rstxt}>{item.itunes.duration}</Text>
                           <View style={{ flexDirection: 'row' }}>
                             <Text style={styles.rstxtloca}>{renderLocationText(item)}</Text>

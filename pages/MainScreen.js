@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -22,9 +22,37 @@ const MainScreen = () => {
   const isFocused = useIsFocused();
   const [rssData, setRssData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingDefzz, setLoadingDefzz] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const toaster = useToast();
   const [previousCounts, setPreviousCounts] = useState({});
+  const [filteredItems, setFilteredItems] = useState([]);
+
+  useEffect(() => {
+    const fetchAndFilterRSS = async () => {
+      setLoadingDefzz(true); // Set loadingDefzz to true while fetching and filtering
+    
+      const allItems = [];
+      // Fetch RSS feeds and parse them
+      for (const rssLink of rssLinksWithAlias) {
+        try {
+          const response = await fetch(rssLink.link);
+          const rssData = await response.text();
+          const parsedData = await Parser.parse(rssData);
+          allItems.push(...parsedData.items);
+        } catch (error) {
+          console.error('Error fetching or parsing RSS:', error);
+        }
+      }
+      // Filter items based on itunes.subtitle === 'DEFZZZ'
+      const filtered = allItems.filter(item => item.itunes && item.itunes.subtitle === 'DEFZZZ');
+      setFilteredItems(filtered);
+    
+      setLoadingDefzz(false); // Set loadingDefzz to false after fetching and filtering
+    };
+
+    fetchAndFilterRSS();
+  }, []);
 
   useEffect(() => {
     StatusBar.setBarStyle("light-content");
@@ -165,6 +193,26 @@ const MainScreen = () => {
 
   return (
     <View style={styles.mainscontainer}>
+      <View style={styles.hotJobsWraper}>
+        <View style={styles.hotJobs}>
+          {loadingDefzz ? (
+            <Image
+              source={require('../assets/images/infinity.gif')}
+              style={{ width: 100, height: 100 }}
+            />
+          ) : (
+            <ScrollView horizontal={true}>
+              {filteredItems.map((item, index) => (
+                <View key={index}>
+                  <Text>{item.title}</Text>
+                  <Text>{item.description}</Text>
+                  <Text>{item.itunes.subtitle}</Text>
+                </View>
+              ))}
+            </ScrollView>
+          )}
+        </View>
+      </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={refreshCacheData}
@@ -189,7 +237,6 @@ const MainScreen = () => {
         </TouchableOpacity>
       </View>
       {refreshing ? (
-
         <Image
           source={require('../assets/images/infinity.gif')}
           style={{ width: 100, height: 100 }}

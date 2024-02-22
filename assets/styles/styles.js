@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginVertical: 10,
+    marginTop: 100
   },
   scrollView: {
     paddingHorizontal: 15,
@@ -869,7 +870,7 @@ const styles = StyleSheet.create({
     zIndex: 1000,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    height: 150,
+    height: 50,
     bottom: 72,
     position: "absolute",
     width: '100%',
@@ -888,6 +889,25 @@ const styles = StyleSheet.create({
     fontSize: 10,
     lineHeight: 12,
     zIndex: 100
+  },
+  card: {
+    width: 100,
+    height: 100
+  },
+  hotJobsWraper: {
+    width: '100%',
+    paddingHorizontal: 15,
+    position: "absolute",
+    top: 15
+  },
+  hotJobs: {
+    width: '100%',
+    height: 80,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: '#a0a0a0',
+    borderRadius: 5
   },
 });
 

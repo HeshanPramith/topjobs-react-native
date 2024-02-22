@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, ScrollView, Modal, TouchableOpacity } from 'react-native';
-import HTML from 'react-native-render-html2';
+import HTML from 'react-native-render-html2'; // deprecated-react-native-prop-types imported
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 
 const removeHtmlTags = (str) => {
@@ -43,7 +43,7 @@ const DetailTab = ({ jobData }) => {
                 p: { lineHeight: 20, marginBottom: 10, color: '#686868', fontSize: 12, textAlign: 'left' },
                 h2: { color: '#000000', fontSize: 16, marginBottom: 5, fontWeight: "500" },
                 li: { color: '#999999', fontSize: 12, },
-                strong: { color: '#000000' }
+                strong: { color: '#000000' },
               }}
             />
           )
@@ -51,11 +51,13 @@ const DetailTab = ({ jobData }) => {
         {jobData.authors.map((authorObject, index) => (
           index === 1 && removeHtmlTags(authorObject.name) !== 'Filename not found' && (
             <TouchableOpacity onPress={() => handleImagePress(`http://192.168.8.101/logo/${jobData.id}/${removeHtmlTags(authorObject.name)}`)}>
-              <Image
-                source={{ uri: `http://192.168.8.101/logo/${jobData.id}/${removeHtmlTags(authorObject.name)}` }}
-                style={{ width: '100%', height: 500, margin: 0 }}
-                resizeMode="contain"
-              />
+              <View style={{ borderRadius: 10, overflow: 'hidden' }}>
+                <Image
+                  source={{ uri: `http://192.168.8.101/logo/${jobData.id}/${removeHtmlTags(authorObject.name)}` }}
+                  style={{ width: '100%', height: 500, margin: 0 }}
+                  resizeMode="contain"
+                />
+              </View>
             </TouchableOpacity>
           )
         ))}
@@ -67,7 +69,7 @@ const DetailTab = ({ jobData }) => {
           </TouchableOpacity>
           <Image
             source={{ uri: zoomedImageUri }}
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', borderRadius: 10 }}
             resizeMode="contain"
           />
         </View>
