@@ -16,6 +16,7 @@ import { useToast } from '@siteed/react-native-toaster';
 import Icon from "react-native-vector-icons/FontAwesome6";
 import { Ionicons } from "@expo/vector-icons";
 import rssLinksWithAlias from "../configs/rssData";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -31,10 +32,9 @@ const MainScreen = () => {
   useEffect(() => {
     const fetchAndFilterRSS = async () => {
       setLoadingDefzz(true); // Set loadingDefzz to true while fetching and filtering
-    
+      
       const allItems = [];
-      // Fetch RSS feeds and parse them
-      for (const rssLink of rssLinksWithAlias) {
+      const fetchPromises = rssLinksWithAlias.map(async (rssLink) => {
         try {
           const response = await fetch(rssLink.link);
           const rssData = await response.text();
@@ -43,7 +43,11 @@ const MainScreen = () => {
         } catch (error) {
           console.error('Error fetching or parsing RSS:', error);
         }
-      }
+      });
+    
+      // Fetch all RSS feeds concurrently
+      await Promise.allSettled(fetchPromises);
+    
       // Filter items based on itunes.subtitle === 'DEFZZZ'
       const filtered = allItems.filter(item => item.itunes && item.itunes.subtitle === 'DEFZZZ');
       setFilteredItems(filtered);
@@ -191,22 +195,81 @@ const MainScreen = () => {
     }
   };
 
+  // Function to render location text with popup for multiple towns
+  const renderLocationText = (item) => {
+    if (item.itunes.explicit.includes(',')) {
+      const towns = item.itunes.explicit.split(',');
+      return (
+        <TouchableOpacity onPress={() => setSelectedItem(item)}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text>{towns[0]}</Text>
+            <Text>, +{towns.length - 1} more</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    } else {
+      return <Text>{item.itunes.explicit}</Text>;
+    }
+  };
+
+  const orderAliasMapping = {
+    '5': 'Private Full time',
+    '6': 'Private Part time',
+    '9': 'Government Full time',
+    '10': 'Government Part time',
+    '17': 'NGO Full time',
+    '18': 'NGO Part time'
+  };
+
+  const backgroundColors = ['#7440FC', '#27c7e2', '#3374FF', '#ad00a5', '#00a12b'];
+
+  const formatDateMonthDate = (date) => {
+    const month = date.toLocaleString('default', { month: 'short' });
+    const day = date.getDate();
+    return `${month} ${day}`;
+  };
+
   return (
-    <View style={styles.mainscontainer}>
+    <View style={styles.mainsContainerHotjob}>
+      <View style={styles.commContainer}>
+        <Text style={styles.comTitles}>Hotjobs</Text>
+      </View>
       <View style={styles.hotJobsWraper}>
         <View style={styles.hotJobs}>
           {loadingDefzz ? (
             <Image
               source={require('../assets/images/infinity.gif')}
-              style={{ width: 100, height: 100 }}
+              style={{ width: 70, height: 70 }}
             />
           ) : (
             <ScrollView horizontal={true}>
               {filteredItems.map((item, index) => (
-                <View key={index}>
-                  <Text>{item.title}</Text>
-                  <Text>{item.description}</Text>
-                  <Text>{item.itunes.subtitle}</Text>
+                <View key={index} style={[styles.eachJob, { backgroundColor: backgroundColors[index % backgroundColors.length] }]}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.imgEach}>
+                      {item.itunes.summary ? (
+                        <Image
+                          source={{ uri: `http://123.231.114.194:7181/logo/${item.itunes.summary}` }}
+                          style={{ width: '100%', height: 50, borderRadius: 5 }}
+                        />
+                      ) : (
+                        <Text>{item.itunes.summary}</Text>
+                      )}
+                    </View>
+                    {item.categories.map((categoryObject) => (
+                      <View style={styles.dateTags}>
+                        <Text style={[styles.bigDateText, { color: backgroundColors[index % backgroundColors.length] }]}>{formatDateMonthDate(new Date(categoryObject.name))}</Text>
+                        <Text style={[styles.smallDateText, { color: backgroundColors[index % backgroundColors.length] }]}>{new Date(categoryObject.name).getFullYear()}</Text>                        
+                      </View>
+                    ))}
+                  </View>
+                  <Text style={styles.eachTgTitle} numberOfLines={1} ellipsizeMode="tail">{item.title.trim().replace(/\s+/g, ' ')}</Text>
+                  <Text style={styles.eachTgSub} numberOfLines={1} ellipsizeMode="tail">{item.itunes.duration}</Text>
+                  <Text style={styles.eachTgSub} numberOfLines={1} ellipsizeMode="tail">{renderLocationText(item)}</Text>
+                  <View style={styles.jobDetailViewTagHot}>{/* Updated style here */}
+                    <Text style={styles.jobDetailViewTagHotText}>{orderAliasMapping[item.itunes.order]}</Text>
+                  </View>
+                  {/* <Text>{item.itunes.subtitle}</Text> */}
                 </View>
               ))}
             </ScrollView>
@@ -214,6 +277,7 @@ const MainScreen = () => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
+        <Text style={styles.comTitles}>Popular Categories</Text>
         <TouchableOpacity
           onPress={refreshCacheData}
           style={refreshing ? styles.lgiconButtonbgDeact : styles.lgiconButtonbg}
@@ -226,21 +290,31 @@ const MainScreen = () => {
               justifyContent: "center",
             }}
           >
-            <Ionicons
-              name="download"
-              size={20}
-              color="#000000"
-              style={{ marginRight: 10 }}
-            />
-            <Text style={styles.buttonText2}>{refreshing ? "Gathering New Data" : "Latest Vacancies"}</Text>
+            {refreshing ? (
+              <Ionicons
+                name="eye"
+                size={20}
+                color="#000000"
+              />
+            ) : (
+              <FontAwesome6 name="arrows-rotate" size={20} color="#000000" />
+              // <Ionicons
+              //   name="arrows-rotate"
+              //   size={20}
+              //   color="#000000"
+              // />
+            )}
+            {/* <Text style={styles.buttonText2}>{refreshing ? "Gathering New Data" : "Get Latest Vacancies"}</Text> */}
           </View>
         </TouchableOpacity>
       </View>
       {refreshing ? (
-        <Image
-          source={require('../assets/images/infinity.gif')}
-          style={{ width: 100, height: 100 }}
-        />
+        <View style={styles.scrollViewMainRef}>
+          <Image
+            source={require('../assets/images/infinity.gif')}
+            style={{ width: 100, height: 100 }}
+          />
+        </View>
       ) : (
         <ScrollView style={styles.scrollViewMain}>
           {rssData.map(({ link, alias, itemCount, increaseCount }) => {

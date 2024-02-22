@@ -120,30 +120,24 @@ const styles = StyleSheet.create({
   },
   lgiconButtonbg: {
     textAlign: "center",
-    backgroundColor: "#ffcc33",
+    backgroundColor: "#ffcc3300",
     borderRadius: 30,
     color: "#000000",
-    elevation: 5,
-    shadowColor: "#ffcc33",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
     padding: 10,
+    paddingRight: 0,
     margin: 10,
+    marginRight: 0,
     borderRadius: 5,
   },
   lgiconButtonbgDeact: {
     textAlign: "center",
-    backgroundColor: "#cacaca",
+    backgroundColor: "#cacaca00",
     borderRadius: 30,
     color: "#000000",
-    elevation: 5,
-    shadowColor: "#cacaca",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
     padding: 10,
+    paddingRight: 0,
     margin: 10,
+    marginRight: 0,
     borderRadius: 5,
   },
   jciconButtonbg: {
@@ -226,8 +220,22 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   buttonContainer: {
-    marginVertical: 10,
-    marginTop: 100
+    width: '100%',
+    marginTop: 20,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  commContainer: {
+    width: '100%',
+    marginTop: 10,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   scrollView: {
     paddingHorizontal: 15,
@@ -236,9 +244,17 @@ const styles = StyleSheet.create({
   },
   scrollViewMain: {
     paddingHorizontal: 15,
+    //flex: 1,
+    width: "100%",
+    marginBottom: 80
+  },
+  scrollViewMainRef: {
+    paddingHorizontal: 15,
     flex: 1,
     width: "100%",
-    paddingBottom: 10
+    marginBottom: 80,
+    alignItems: "center",
+    justifyContent: "center",
   },
   rssLinkButton: {
     marginTop: 10,
@@ -264,7 +280,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    zIndex: 100
   },
   bottomNavigator: {
     backgroundColor: "#8b0000",    
@@ -890,25 +907,95 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     zIndex: 100
   },
-  card: {
-    width: 100,
-    height: 100
-  },
   hotJobsWraper: {
     width: '100%',
     paddingHorizontal: 15,
-    position: "absolute",
-    top: 15
+    position: "relative",
+    top: 10
   },
   hotJobs: {
     width: '100%',
-    height: 80,
-    padding: 10,
+    height: 'auto',
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: '#a0a0a0',
     borderRadius: 5
   },
+  eachJob: {
+    width: 220,
+    backgroundColor: '#d4d4d4',
+    marginRight: 15,
+    padding: 15,
+    borderRadius: 10,
+    borderCurve: "circular",
+  },
+  mainsContainerHotjob: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  comTitles: {
+    fontWeight: "500",
+    fontSize: 16
+  },
+  imgEach: {
+    width: '60%',
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
+    padding: 10,
+    backgroundColor: '#ffffff3a',
+    borderRadius: 5,
+    marginBottom: 10
+  },
+  eachTgTitle: {
+    color: '#FFFFFF',
+    fontWeight: "500",
+    fontSize: 18
+  },
+  eachTgSub: {
+    color: '#ffffff98',
+    fontWeight: "400",
+    fontSize: 12
+  },
+  dateTags: {
+    width: 'auto',
+    textAlign: "center",
+    backgroundColor: '#ffffffff',
+    height: 70,
+    borderRadius: 5,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bigDateText: {
+    width: '100%',
+    textAlign: "center",
+    color: '#FFFFFF',
+    fontWeight: "500",
+    fontSize: 16
+  },
+  smallDateText: {
+    width: '100%',
+    textAlign: "center",
+    color: '#FFFFFF',
+    fontSize: 12
+  },
+  jobDetailViewTagHot: {
+    alignSelf: 'flex-start',
+    textAlign: "center",
+    marginTop: 5,
+    backgroundColor: '#ffffff27',
+    borderRadius: 5,
+    padding: 8,
+    paddingVertical: 5,
+  },
+  jobDetailViewTagHotText: {
+    width: 'auto',
+    fontSize: 10,
+    fontWeight: "500",
+    color: '#FFFFFF',
+  }
 });
 
 export default styles;
