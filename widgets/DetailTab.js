@@ -36,14 +36,25 @@ const DetailTab = ({ jobData }) => {
         {jobData.authors.map((authorObject, index) => (
           index === 1 && (
             <HTML
+              key={index}
               html={decodeURIComponent(authorObject.name)
                 .replace(/\+/g, "&nbsp;")
               }
               tagsStyles={{
                 p: { lineHeight: 20, marginBottom: 10, color: '#686868', fontSize: 12, textAlign: 'left' },
+                h1: { color: '#000000', fontSize: 16, marginBottom: 5, fontWeight: "500" },
                 h2: { color: '#000000', fontSize: 16, marginBottom: 5, fontWeight: "500" },
-                li: { color: '#999999', fontSize: 12, },
+                h3: { color: '#000000', fontSize: 16, marginBottom: 5, fontWeight: "500" },
+                h4: { color: '#000000', fontSize: 16, marginBottom: 5, fontWeight: "500" },
+                h5: { color: '#000000', fontSize: 16, marginBottom: 5, fontWeight: "500" },
+                h6: { color: '#000000', fontSize: 16, marginBottom: 5, fontWeight: "500" },
+                ul: { color: '#999999', fontSize: 12 },
+                ol: { color: '#999999', fontSize: 12 },
+                li: { color: '#999999', fontSize: 14, },
                 strong: { color: '#000000' },
+              }}
+              classesStyles={{
+                'li::before': { color: 'teal' }
               }}
             />
           )

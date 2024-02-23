@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -14,9 +14,9 @@ import styles from "../assets/styles/styles";
 import AppNavigator from "../configs/AppNavigator";
 import { useToast } from '@siteed/react-native-toaster';
 import Icon from "react-native-vector-icons/FontAwesome6";
-import { Ionicons } from "@expo/vector-icons";
 import rssLinksWithAlias from "../configs/rssData";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import { LinearGradient } from "expo-linear-gradient";
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -223,16 +223,22 @@ const MainScreen = () => {
 
   const backgroundColors = ['#7440FC', '#27c7e2', '#3374FF', '#ad00a5', '#00a12b'];
 
+  const dateColors = ['#7440FC', '#27c7e2', '#3374FF', '#ad00a5', '#00a12b'];
+
   const formatDateMonthDate = (date) => {
     const month = date.toLocaleString('default', { month: 'short' });
     const day = date.getDate();
     return `${month} ${day}`;
   };
 
+  const handleRssLinkClickHotjob = useCallback((item) => {
+    navigation.navigate('JobDetailView', { jobData: item });
+  }, [navigation]);
+
   return (
     <View style={styles.mainsContainerHotjob}>
       <View style={styles.commContainer}>
-        <Text style={styles.comTitles}>Hotjobs</Text>
+        <Text style={styles.comTitles}>Hot Jobs</Text>
       </View>
       <View style={styles.hotJobsWraper}>
         <View style={styles.hotJobs}>
@@ -244,43 +250,57 @@ const MainScreen = () => {
           ) : (
             <ScrollView horizontal={true}>
               {filteredItems.map((item, index) => (
-                <View key={index} style={[styles.eachJob, { backgroundColor: backgroundColors[index % backgroundColors.length] }]}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <View style={styles.imgEach}>
-                      {item.itunes.summary ? (
-                        <Image
-                          source={{ uri: `http://123.231.114.194:7181/logo/${item.itunes.summary}` }}
-                          style={{ width: '100%', height: 50, borderRadius: 5 }}
-                        />
-                      ) : (
-                        <Text>{item.itunes.summary}</Text>
-                      )}
-                    </View>
-                    {item.categories.map((categoryObject) => (
-                      <View style={styles.dateTags}>
-                        <Text style={[styles.bigDateText, { color: backgroundColors[index % backgroundColors.length] }]}>{formatDateMonthDate(new Date(categoryObject.name))}</Text>
-                        <Text style={[styles.smallDateText, { color: backgroundColors[index % backgroundColors.length] }]}>{new Date(categoryObject.name).getFullYear()}</Text>                        
+                <TouchableOpacity
+                  key={`filteredItem-${index}`}
+                  onPress={() => {
+                    handleRssLinkClickHotjob(item);
+                  }}
+                  activeOpacity={0.9}
+                >
+                  <View key={index} style={[styles.eachJob, { backgroundColor: backgroundColors[index % backgroundColors.length] }]}>
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={styles.imgEach}>
+                        {item.itunes.summary ? (
+                          <Image
+                            source={{ uri: `http://123.231.114.194:7181/logo/${item.itunes.summary}` }}
+                            style={{ width: '100%', height: 50, borderRadius: 5 }}
+                          />
+                        ) : (
+                          <Text>{item.itunes.summary}</Text>
+                        )}
                       </View>
-                    ))}
+                      {item.categories.map((categoryObject, innerIndex) => (
+                        <View key={innerIndex} style={styles.dateTags}>
+                          <Text style={[styles.bigDateText, { color: dateColors[index % dateColors.length] }]}>{formatDateMonthDate(new Date(categoryObject.name))}</Text>
+                          <Text style={[styles.smallDateText, { color: dateColors[index % dateColors.length] }]}>{new Date(categoryObject.name).getFullYear()}</Text>                        
+                        </View>
+                      ))}
+                    </View>
+                    <Text style={styles.eachTgTitle} numberOfLines={1} ellipsizeMode="tail">{item.title.trim().replace(/\s+/g, ' ')}</Text>
+                    <Text style={styles.eachTgSub} numberOfLines={1} ellipsizeMode="tail">{item.itunes.duration}</Text>
+                    <Text style={styles.eachTgSub} numberOfLines={1} ellipsizeMode="tail">{renderLocationText(item)}</Text>
+                    <View style={styles.jobDetailViewTagHot}>{/* Updated style here */}
+                      <Text style={styles.jobDetailViewTagHotText}>{orderAliasMapping[item.itunes.order]}</Text>
+                    </View>
+                    {/* <Text>{item.itunes.subtitle}</Text> */}
                   </View>
-                  <Text style={styles.eachTgTitle} numberOfLines={1} ellipsizeMode="tail">{item.title.trim().replace(/\s+/g, ' ')}</Text>
-                  <Text style={styles.eachTgSub} numberOfLines={1} ellipsizeMode="tail">{item.itunes.duration}</Text>
-                  <Text style={styles.eachTgSub} numberOfLines={1} ellipsizeMode="tail">{renderLocationText(item)}</Text>
-                  <View style={styles.jobDetailViewTagHot}>{/* Updated style here */}
-                    <Text style={styles.jobDetailViewTagHotText}>{orderAliasMapping[item.itunes.order]}</Text>
-                  </View>
-                  {/* <Text>{item.itunes.subtitle}</Text> */}
-                </View>
+                </TouchableOpacity>
               ))}
             </ScrollView>
           )}
         </View>
+        <LinearGradient
+          colors={["#ffffff00", "#ffffff"]}
+          start={{ x: 0, y: 0.9 }}
+          end={{ x: 1, y: 0.9 }}
+          style={styles.hotJobsHider}
+        ></LinearGradient>
       </View>
       <View style={styles.buttonContainer}>
         <Text style={styles.comTitles}>Popular Categories</Text>
         <TouchableOpacity
           onPress={refreshCacheData}
-          style={refreshing ? styles.lgiconButtonbgDeact : styles.lgiconButtonbg}
+          style={styles.lgiconButtonbg}
           disabled={refreshing}
         >
           <View
@@ -291,20 +311,10 @@ const MainScreen = () => {
             }}
           >
             {refreshing ? (
-              <Ionicons
-                name="eye"
-                size={20}
-                color="#000000"
-              />
+              <FontAwesome6 name="download" size={20} color="#eeae00" />
             ) : (
-              <FontAwesome6 name="arrows-rotate" size={20} color="#000000" />
-              // <Ionicons
-              //   name="arrows-rotate"
-              //   size={20}
-              //   color="#000000"
-              // />
+              <FontAwesome6 name="arrows-rotate" size={20} color="#009c27" />
             )}
-            {/* <Text style={styles.buttonText2}>{refreshing ? "Gathering New Data" : "Get Latest Vacancies"}</Text> */}
           </View>
         </TouchableOpacity>
       </View>
@@ -320,7 +330,6 @@ const MainScreen = () => {
           {rssData.map(({ link, alias, itemCount, increaseCount }) => {
             const rssLinkData = rssLinksWithAlias.find(data => data.link === link);
             const iconName = rssLinkData?.icon || "briefcase";
-
             return (              
               <TouchableOpacity
                 key={link}

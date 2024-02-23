@@ -10,7 +10,23 @@ const styles = StyleSheet.create({
   spcon: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "center",
+    backgroundColor: "#ffffff",
+    textAlign: "center",   
+    padding: 5,
+    borderRadius: 15,
+    overflow: "hidden",
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+  },
+  spconWrapper: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    borderCurve: "circular",
+    borderRadius: 15,
+    backgroundColor: '#000000'
   },
   text: {
     fontSize: 50,
@@ -31,12 +47,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   logintext: {
-    fontSize: 70,
-    color: "#8b0000",
+    fontSize: 40,
+    color: "#c00000",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    textAlign: "center",
+    textAlign: "left",
+    letterSpacing: -2,
+    paddingLeft: 10,
+    marginTop: 20
+  },
+  logintextSub: {
+    fontSize: 14,
+    color: "#303030",
+    paddingLeft: 10,
+    marginVertical: 20,
+    lineHeight: 20
   },
   logintext2: {
     fontSize: 19,
@@ -83,7 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: "#ffffff",
     fontSize: 16,
     textAlign: "center",
     fontWeight: "500",
@@ -106,71 +132,48 @@ const styles = StyleSheet.create({
   },
   lgiconButtonbgLog: {
     textAlign: "center",
-    backgroundColor: "#8b0000",
-    borderRadius: 30,
-    color: "#000000",
-    elevation: 5,
-    shadowColor: "#8b0000",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 30,
-    padding: 10,
-    paddingHorizontal: 20,
-    margin: 10,
-  },
-  lgiconButtonbg: {
-    textAlign: "center",
-    backgroundColor: "#ffcc3300",
-    borderRadius: 30,
-    color: "#000000",
-    padding: 10,
-    paddingRight: 0,
-    margin: 10,
-    marginRight: 0,
+    backgroundColor: "#009b2e",
     borderRadius: 5,
-  },
-  lgiconButtonbgDeact: {
-    textAlign: "center",
-    backgroundColor: "#cacaca00",
-    borderRadius: 30,
-    color: "#000000",
+    color: "#ffffff",
     padding: 10,
-    paddingRight: 0,
+    paddingHorizontal: 10,
     margin: 10,
-    marginRight: 0,
-    borderRadius: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   jciconButtonbg: {
     textAlign: "center",
-    backgroundColor: "#ffcc33",
-    borderRadius: 30,
-    paddingHorizontal: 20,
+    backgroundColor: "#cf0000",
+    borderRadius: 5,
+    paddingHorizontal: 10,
     color: "#000000",
-    elevation: 5,
-    shadowColor: "#ffcc33",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
+    padding: 10,
+    margin: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   jcbuttonText: {
-    color: "#000000",
+    color: "#ffffff",
     fontSize: 16,
     textAlign: "center",
     fontWeight: "700",
   },
   backgroundImage: {
-    flex: 1,
+    //flex: 1,
     width: "100%",
     height: "100%",
     resizeMode: "cover",
     backgroundColor: "#FFF",
+    alignSelf: "flex-end",
   },
   ortext: {
-    width: "100%",
     height: 30,
     verticalAlign: "middle",
-    color: "black",
+    color: "#000000",
     fontWeight: "bold",
+    textAlign: "center",
   },
   rssItemContainer: {
     marginBottom: 10,
@@ -221,7 +224,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    marginTop: 20,
+    marginTop: 15,
     paddingHorizontal: 15,
     flexDirection: "row",
     alignContent: "center",
@@ -911,14 +914,23 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 15,
     position: "relative",
-    top: 10
+    top: 10,
+    height: 200,
   },
   hotJobs: {
     width: '100%',
-    height: 'auto',
+    height: 200,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5
+    borderRadius: 5,
+  },
+  hotJobsHider: {
+    position: "absolute",
+    top: 0,
+    right: 15,
+    width: '40%',
+    height: 197,
+    pointerEvents: "none",
   },
   eachJob: {
     width: 220,
@@ -944,7 +956,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 10,
     padding: 10,
-    backgroundColor: '#ffffff3a',
+    backgroundColor: '#ffffffff',
     borderRadius: 5,
     marginBottom: 10
   },
@@ -971,14 +983,14 @@ const styles = StyleSheet.create({
   bigDateText: {
     width: '100%',
     textAlign: "center",
-    color: '#FFFFFF',
+    //color: '#FFFFFF',
     fontWeight: "500",
     fontSize: 16
   },
   smallDateText: {
     width: '100%',
     textAlign: "center",
-    color: '#FFFFFF',
+    //color: '#FFFFFF',
     fontSize: 12
   },
   jobDetailViewTagHot: {
@@ -995,7 +1007,29 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "500",
     color: '#FFFFFF',
-  }
+  },
+  spashTxtWrapper: {
+    position: "relative",
+    width: '100%',
+    backgroundColor: '#00000000',
+    borderRadius: 0,
+    bottom: 0
+  },
+  sliderText: {
+    fontSize: 30,
+    fontWeight: "800",
+    color: '#ffffff',
+    position: "absolute",
+    bottom: 100,
+    zIndex: 100,
+    width: '100%',
+    textAlign: "center",
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', // or use 'space-around' based on your design preference
+  },
 });
 
 export default styles;
