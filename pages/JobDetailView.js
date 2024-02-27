@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { View, Text, useWindowDimensions, TouchableOpacity, Linking, Share, Image, Modal, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import { useNavigation } from '@react-navigation/native';
@@ -180,6 +180,19 @@ const JobDetailView = ({ route }) => {
     '17': 'NGO Full time',
     '18': 'NGO Part time'
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ marginRight: 15 }}
+          onPress={() => handleShareJobLink()}
+        >
+          <FontAwesome6 name="share-nodes" size={20} color="white" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <>

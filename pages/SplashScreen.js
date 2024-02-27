@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Ionicons } from "@expo/vector-icons";
 import Swiper from 'react-native-swiper';
 import styles from "../assets/styles/styles";
 import { useToast } from '@siteed/react-native-toaster';

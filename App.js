@@ -7,6 +7,7 @@ import LoginScreen from './pages/LoginScreen';
 import RssFeedItemsScreen from './pages/RssFeedItemsScreen';
 import FavoritesScreen from './pages/FavoritesScreen';
 import JobDetailView from './pages/JobDetailView';
+import JobCategory from './pages/JobCategory';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ToastProvider } from '@siteed/react-native-toaster';
 
@@ -93,6 +94,23 @@ export default function App() {
               component={JobDetailView}
               options={{
                 title: 'Vacancy View',
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                  color: '#FFFFFF',
+                  fontSize: 16,
+                },
+                headerStyle: {
+                  backgroundColor: '#8b0000',
+                  elevation: 0
+                },
+                headerTintColor: '#FFFFFF',
+              }}
+            />
+            <Stack.Screen
+              name="JobCategory"
+              component={JobCategory}
+              options={{
+                title: 'All Job Categories',
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
                   color: '#FFFFFF',

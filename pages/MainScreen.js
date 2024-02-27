@@ -6,7 +6,10 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Modal,
+  TouchableWithoutFeedback
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import Parser from "react-native-rss-parser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,6 +20,7 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import rssLinksWithAlias from "../configs/rssData";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from "expo-font";
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -28,6 +32,11 @@ const MainScreen = () => {
   const toaster = useToast();
   const [previousCounts, setPreviousCounts] = useState({});
   const [filteredItems, setFilteredItems] = useState([]);
+
+  const [fontsLoaded] = useFonts({
+    verdana: require("../assets/fonts/verdana.ttf"),
+    verdanaBold: require("../assets/fonts/verdana-bold.ttf"),
+  });
 
   useEffect(() => {
     const fetchAndFilterRSS = async () => {
@@ -195,6 +204,8 @@ const MainScreen = () => {
     }
   };
 
+  const [selectedItem, setSelectedItem] = useState(null);
+
   // Function to render location text with popup for multiple towns
   const renderLocationText = (item) => {
     if (item.itunes.explicit.includes(',')) {
@@ -202,13 +213,13 @@ const MainScreen = () => {
       return (
         <TouchableOpacity onPress={() => setSelectedItem(item)}>
           <View style={{ flexDirection: 'row' }}>
-            <Text>{towns[0]}</Text>
-            <Text>, +{towns.length - 1} more</Text>
+            <Text style={styles.eachTgSub}>{towns[0]}</Text>
+            <Text style={styles.eachTgSub}>, +{towns.length - 1} more</Text>
           </View>
         </TouchableOpacity>
       );
     } else {
-      return <Text>{item.itunes.explicit}</Text>;
+      return <Text style={styles.eachTgSub}>{item.itunes.explicit}</Text>;
     }
   };
 
@@ -221,9 +232,9 @@ const MainScreen = () => {
     '18': 'NGO Part time'
   };
 
-  const backgroundColors = ['#7440FC', '#27c7e2', '#3374FF', '#ad00a5', '#00a12b'];
+  const backgroundColors = ['#27ae60', '#c0392b', '#e67e22', '#e74c3c','#3498db', '#9b59b6', '#34495e', '#e74c3c'];
 
-  const dateColors = ['#7440FC', '#27c7e2', '#3374FF', '#ad00a5', '#00a12b'];
+  const dateColors = ['#27ae60', '#c0392b', '#e67e22', '#e74c3c', '#3498db', '#9b59b6', '#34495e', '#e74c3c'];
 
   const formatDateMonthDate = (date) => {
     const month = date.toLocaleString('default', { month: 'short' });
@@ -234,6 +245,10 @@ const MainScreen = () => {
   const handleRssLinkClickHotjob = useCallback((item) => {
     navigation.navigate('JobDetailView', { jobData: item });
   }, [navigation]);
+
+  if (!fontsLoaded || loading) {
+    return null;
+  }
 
   return (
     <View style={styles.mainsContainerHotjob}>
@@ -248,7 +263,7 @@ const MainScreen = () => {
               style={{ width: 70, height: 70 }}
             />
           ) : (
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} style={styles.borderRadiusMedium} showsHorizontalScrollIndicator={false}>
               {filteredItems.map((item, index) => (
                 <TouchableOpacity
                   key={`filteredItem-${index}`}
@@ -260,14 +275,8 @@ const MainScreen = () => {
                   <View key={index} style={[styles.eachJob, { backgroundColor: backgroundColors[index % backgroundColors.length] }]}>
                     <View style={{ flexDirection: 'row' }}>
                       <View style={styles.imgEach}>
-                        {item.itunes.summary ? (
-                          <Image
-                            source={{ uri: `http://123.231.114.194:7181/logo/${item.itunes.summary}` }}
-                            style={{ width: '100%', height: 50, borderRadius: 5 }}
-                          />
-                        ) : (
-                          <Text>{item.itunes.summary}</Text>
-                        )}
+                        <Text style={{ fontFamily: 'verdanaBold' }}>topjobs</Text>
+                        <Text style={{ fontFamily: 'verdana' }}>topAD</Text>
                       </View>
                       {item.categories.map((categoryObject, innerIndex) => (
                         <View key={innerIndex} style={styles.dateTags}>
@@ -279,28 +288,39 @@ const MainScreen = () => {
                     <Text style={styles.eachTgTitle} numberOfLines={1} ellipsizeMode="tail">{item.title.trim().replace(/\s+/g, ' ')}</Text>
                     <Text style={styles.eachTgSub} numberOfLines={1} ellipsizeMode="tail">{item.itunes.duration}</Text>
                     <Text style={styles.eachTgSub} numberOfLines={1} ellipsizeMode="tail">{renderLocationText(item)}</Text>
-                    <View style={styles.jobDetailViewTagHot}>{/* Updated style here */}
-                      <Text style={styles.jobDetailViewTagHotText}>{orderAliasMapping[item.itunes.order]}</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={styles.jobDetailViewTagHot}>
+                        <Text style={styles.jobDetailViewTagHotText}>
+                          {orderAliasMapping[item.itunes.order]}
+                        </Text>
+                      </View>
+                      <View style={styles.jobDetailViewTagHot}>
+                        <Text style={styles.jobDetailViewTagHotText}>topAD</Text>
+                      </View>
                     </View>
-                    {/* <Text>{item.itunes.subtitle}</Text> */}
                   </View>
                 </TouchableOpacity>
               ))}
             </ScrollView>
           )}
         </View>
-        <LinearGradient
-          colors={["#ffffff00", "#ffffff"]}
-          start={{ x: 0, y: 0.9 }}
-          end={{ x: 1, y: 0.9 }}
-          style={styles.hotJobsHider}
-        ></LinearGradient>
+        {loadingDefzz ? (
+            <View></View>
+          ) : (
+            <LinearGradient
+              colors={["#F6F7F900", "#F6F7F9"]}
+              start={{ x: 0, y: 0.9 }}
+              end={{ x: 1, y: 0.9 }}
+              style={styles.hotJobsHider}
+            >
+            </LinearGradient>
+        )}
       </View>
       <View style={styles.buttonContainer}>
         <Text style={styles.comTitles}>Popular Categories</Text>
         <TouchableOpacity
           onPress={refreshCacheData}
-          style={styles.lgiconButtonbg}
+          style={refreshing ? styles.lgiconButtonbgDeact : styles.lgiconButtonbg}
           disabled={refreshing}
         >
           <View
@@ -310,11 +330,8 @@ const MainScreen = () => {
               justifyContent: "center",
             }}
           >
-            {refreshing ? (
-              <FontAwesome6 name="download" size={20} color="#eeae00" />
-            ) : (
-              <FontAwesome6 name="arrows-rotate" size={20} color="#009c27" />
-            )}
+            <FontAwesome6 style={refreshing ? styles.refIconDeac : styles.refIcon} name="download"/>
+            <Text style={refreshing ? styles.buttonText2Deac : styles.buttonText2}>{refreshing ? "Loading New Jobs" : "Get Latest Jobs"}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -330,37 +347,62 @@ const MainScreen = () => {
           {rssData.map(({ link, alias, itemCount, increaseCount }) => {
             const rssLinkData = rssLinksWithAlias.find(data => data.link === link);
             const iconName = rssLinkData?.icon || "briefcase";
+            if (itemCount === 0) {
+              return null; // Skip rendering TouchableOpacity if itemCount is 0
+            }
             return (              
               <TouchableOpacity
                 key={link}
                 onPress={() => handleRssLinkClick(link, alias)}
                 style={styles.rssLinkButton}
               >
-
                 <View style={styles.rssLinkButtonICon}>
                   <Icon name={iconName} size={18} color="#000" style={styles.iconStyle} />
                 </View>
                 <Text style={styles.rssLinkButtonTxt}>{alias}</Text>
-                <Text style={styles.rssLinkButtonCount}>
-                  {itemCount}
-                </Text>
+                <Text style={styles.rssLinkButtonCount}>{itemCount}</Text>
                 {increaseCount > 0 && (
                   <Text style={styles.rssLinkButtonCountIncre}>
                     New : {increaseCount}
                   </Text>
-                )}
-
-                {itemCount === 0 ? (
-                  <View style={[styles.redCircleIndicator, styles.cirIndi]}></View>
-                ) : (
-                  <View style={[styles.greenCircleIndicator, styles.cirIndi]}></View>
                 )}
               </TouchableOpacity>
             );
           })}
         </ScrollView>
       )}
+      <LinearGradient
+        colors={["#F6F7F900", "#f6f7f9c2", "#F6F7F9"]}
+        style={styles.gradWrapperInner}
+        >
+      </LinearGradient>
       <AppNavigator />
+      <Modal
+          visible={selectedItem !== null}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={() => setSelectedItem(null)}
+        >
+          <TouchableWithoutFeedback onPress={() => setSelectedItem(null)}>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={styles.modalTitle}>All Towns</Text>
+                  <TouchableOpacity onPress={() => setSelectedItem(null)} style={styles.closeButtonTown}>
+                    <Ionicons name="close-circle-outline" size={24} color="#000" />
+                  </TouchableOpacity>
+                </View>
+                <ScrollView style={{ maxHeight: "100%", height: 'auto' }}>
+                  {selectedItem && selectedItem.itunes.explicit.split(',').map((town, index) => (
+                    <View style={styles.townWrapper} key={index}>
+                      <Text style={styles.modalOptionItm}>{town.trim()}</Text>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
     </View>
   );
 };

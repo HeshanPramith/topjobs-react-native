@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   logintextSub: {
     fontSize: 14,
-    color: "#303030",
+    color: "#7c7c7c",
     paddingLeft: 10,
     marginVertical: 20,
     lineHeight: 20
@@ -115,8 +115,14 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   buttonText2: {
+    color: "#030303",
+    fontSize: 14,
+    textAlign: "center",
+    fontWeight: "500",
+  },
+  buttonText2Deac: {
     color: "#000000",
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "center",
     fontWeight: "500",
   },
@@ -224,7 +230,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    marginTop: 15,
+    marginTop: 5,
     paddingHorizontal: 15,
     flexDirection: "row",
     alignContent: "center",
@@ -249,7 +255,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     //flex: 1,
     width: "100%",
-    marginBottom: 80
+    height: 'auto',
+    marginBottom: 70,
+    paddingBottom: 120,
   },
   scrollViewMainRef: {
     paddingHorizontal: 15,
@@ -272,18 +280,17 @@ const styles = StyleSheet.create({
   },
   rssLinkButtonCount: {
     position: "absolute",
-    right: 20,
+    right: 10,
     top: 14,
     fontWeight: "bold",
     color: '#000000'
   },
   buttonContainerBottom: {
-    marginVertical: 10,
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 15,
+    paddingHorizontal: 0,
     zIndex: 100
   },
   bottomNavigator: {
@@ -293,7 +300,7 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     alignItems: "center",
     paddingVertical: 10,
-    borderRadius: 30,
+    borderRadius: 0,
     marginHorizontal: 0,
   },
   bottomNavBtn: {
@@ -327,7 +334,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   rssItemTextContainer: {
-    padding: 15,
+    padding: 10,
     paddingRight: 0,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -347,30 +354,29 @@ const styles = StyleSheet.create({
   },
   gradientContainer: {
     flex: 1,
-    padding: 0
+    padding: 0,
+    borderColor: "#e2e2e2",
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: '#FFFFFF'
   },
   favico: {
     //marginTop: 6
   },
   searchContainer: {
-    width: '85%',
-    height: 50,
-    backgroundColor: '#FFF',
-    marginBottom: 10,
-    paddingHorizontal: 15,
-    //flex: 1,
+    width: '80%',
+    height: 45,
+    backgroundColor: '#F6F7F9',
+    flex: 1,
     flexDirection: "row"
   },
   searchInput: {
     width: '100%',
-    height: 50,
-    backgroundColor: '#ffcc33',
-    borderColor: "#ccc",
-    borderWidth: 0,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    height: 45,
+    backgroundColor: '#f0be28',
+    borderColor: "#f0be28",
+    borderWidth: 1,
+    borderRadius: 5,
     paddingHorizontal: 16,
     color: '#000',
     position: "relative",
@@ -378,7 +384,7 @@ const styles = StyleSheet.create({
   },
   searchIconContainer: {
     width: '12%',
-    height: 50,
+    height: 45,
     backgroundColor: '#ffcc3300',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -387,7 +393,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: '#FFF',
     position: "absolute",
-    right: 15,
+    right: 5,
     zIndex: 2,
     pointerEvents: "none"
   },
@@ -396,7 +402,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
-    backgroundColor: '#FFF',
+    backgroundColor: '#f0f0f03d',
+    borderColor: "#e2e2e2",
+    borderWidth: 1,
     borderRadius: 5,
   },
   rssLeftConImgPopup: {
@@ -409,11 +417,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   rssLeftCon: {
-    width: '67%',
+    width: '65%',
     paddingRight: 15
   },
   rssRightCon: {
-    width: '13%',
+    width: '15%',
     height: 'auto',
     flex: 1,
     alignItems: "center",
@@ -441,11 +449,25 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize: 14
   },
+  jobTotalFil: {
+    fontSize: 14,
+    color: '#9e9e9e',
+  },
   topbar: {
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center"
+  },
+  topBarSearch: {
+    width: '100%',
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: "center",
+    alignItems: "center",
+    marginBottom: 5,
+    height: 30,
   },
   rstxtttl: {
     color: '#000000',
@@ -473,20 +495,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 180,
-    borderRadius: 10,
-    height: 96,
+    borderRadius: 5,
+    height: 89,
     marginTop: 6,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    marginLeft: 15
   },
   saveButton: {
     backgroundColor: '#03a333',
     justifyContent: 'center',
     alignItems: 'center',
     width: 180,
-    borderRadius: 10,
-    height: 96,
+    borderRadius: 5,
+    height: 89,
     marginTop: 6,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    marginLeft: 15
   },
   favTexter: {
     color: '#FFFFFF',
@@ -616,9 +640,9 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   shareVacancyButton: {
-    backgroundColor: '#0077ff13',
+    backgroundColor: '#ffffffff',
     borderWidth: 1,
-    borderColor: "#0077ff7e",
+    borderColor: "#e2e2e2",
     padding: 10,
     borderRadius: 30,
     width: '18%',
@@ -629,13 +653,13 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   shareVacancyButtonIcon: {
-    color: '#0077ff',
+    color: '#000000',
     fontSize: 20,
   },
   togVacancyButtonIn: {
-    backgroundColor: '#0077ff13',
+    backgroundColor: '#ffffffff',
     borderWidth: 1,
-    borderColor: "#0077ff7e",
+    borderColor: "#e2e2e2",
     padding: 10,
     borderRadius: 30,
     width: '18%',
@@ -659,7 +683,7 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   togVacancyButtonIconIn: {
-    color: '#0077ff',
+    color: '#000000',
     fontSize: 20,
   },
   togVacancyButtonIcon: {
@@ -680,21 +704,37 @@ const styles = StyleSheet.create({
     color: "#25c925",
     fontSize: 18,
   },
-
+  boldText: {
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+  jobTotalResult: {
+    fontSize: 10,
+    color: "#575757",
+    fontWeight: '500'
+  },
   headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     marginBottom: 10,
+    marginTop: 15,
   },
   filterButton: {
-    width: "10%",
+    width: 50,
+    backgroundColor: '#f0be28',
+    height: 45,
+    borderColor: "#f0be28",
+    borderWidth: 1,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10
   },
   locatioIcon: {
-    fontSize: 30,
-    marginTop: -10,
-    color: "#117ebd"
+    fontSize: 18,
+    color: "#000000"
   },
   modalTitleSub: {
     color: '#a70000',
@@ -912,30 +952,34 @@ const styles = StyleSheet.create({
   },
   hotJobsWraper: {
     width: '100%',
-    paddingHorizontal: 15,
+    //paddingHorizontal: 15,
     position: "relative",
     top: 10,
-    height: 200,
+    height: 197,
+    borderRadius: 10,
+  },
+  borderRadiusMedium: {
+    borderRadius: 10
   },
   hotJobs: {
     width: '100%',
-    height: 200,
+    height: 190,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5,
+    borderRadius: 10,
   },
   hotJobsHider: {
     position: "absolute",
     top: 0,
-    right: 15,
-    width: '40%',
-    height: 197,
+    right: 0,
+    width: 80,
+    height: 183,
     pointerEvents: "none",
   },
   eachJob: {
-    width: 220,
+    width: 260,
     backgroundColor: '#d4d4d4',
-    marginRight: 15,
+    marginLeft: 15,
     padding: 15,
     borderRadius: 10,
     borderCurve: "circular",
@@ -952,6 +996,7 @@ const styles = StyleSheet.create({
   },
   imgEach: {
     width: '60%',
+    height: 56,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
@@ -974,7 +1019,7 @@ const styles = StyleSheet.create({
     width: 'auto',
     textAlign: "center",
     backgroundColor: '#ffffffff',
-    height: 70,
+    height: 56,
     borderRadius: 5,
     flex: 1,
     justifyContent: "center",
@@ -1001,6 +1046,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 8,
     paddingVertical: 5,
+    marginRight: 5,
   },
   jobDetailViewTagHotText: {
     width: 'auto',
@@ -1029,6 +1075,153 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between', // or use 'space-around' based on your design preference
+  },
+  refIcon: {
+    marginRight: 8,
+    color: '#020202',
+    fontSize: 14
+  },
+  refIconDeac: {
+    marginRight: 8,
+    color: '#000000',
+    fontSize: 14
+  },
+  lgiconButtonbg: {
+    textAlign: "center",
+    backgroundColor: "#f0be28",
+    borderRadius: 30,
+    color: "#ffffff",
+    padding: 10,
+    paddingVertical: 8,
+    margin: 5,
+    borderRadius: 5,
+    marginRight: 0,
+  },
+  lgiconButtonbgDeact: {
+    textAlign: "center",
+    backgroundColor: "#cacaca",
+    borderRadius: 30,
+    color: "#ffffff",
+    padding: 10,
+    paddingVertical: 8,
+    margin: 5,
+    borderRadius: 5,
+    marginRight: 0,
+  },
+  rssLinkButtonTxt: {
+    fontSize: 14
+  },
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    height: 'auto',
+    paddingBottom: 120,
+  },
+  gridItem: {
+    width: '48%',
+    minWidth: 150,
+    marginTop: 15,
+    borderRadius: 5,
+    padding: 10,
+    paddingVertical: 15,
+    flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: '#ffffff',
+    borderColor: "#e2e2e2",
+    borderWidth: 1,
+  },
+  selectedCategory: {
+    backgroundColor: '#00b144',
+    borderColor: "#00b144",
+    borderWidth: 1,
+  },
+  gridBlockiconStyle: {
+    marginBottom: 5
+  },
+  gridBlockTxt: {
+    width: '100%',
+    textAlign: "center",
+    fontSize: 14,
+    verticalAlign: "middle",
+    color: '#000000',
+    fontWeight: "400",
+  },
+  gridBlockCount: {
+    fontSize: 14,
+    color: '#383838',
+    opacity: 0.7,
+    fontWeight: "400",
+  },
+  rssLinkButtonCountIncreGrid: {
+    position: "absolute",
+    right: 20,
+    top: -7,
+    fontWeight: "400",
+    color: '#ffffff',
+    backgroundColor: '#08b32d',
+    borderRadius: 3,
+    padding: 5,
+    paddingVertical: 3,
+    height: 18,
+    fontSize: 10,
+    lineHeight: 12,
+    zIndex: 100,
+    borderWidth: 1,
+    borderColor: '#FFFFFF'
+  },
+  gridBlockTxtAct: {
+    color: '#FFFFFF',
+    fontWeight: "500",
+    opacity: 1
+  },
+  searchContainerJobc: {
+    width: '100%',
+    paddingHorizontal: 15,
+    backgroundColor: '#F6F7F9',
+    //flex: 1,
+    flexDirection: "row",
+    marginTop: 5,
+    paddingBottom: 10
+  },
+  searchInputJobc: {
+    width: '100%',
+    height: 45,
+    backgroundColor: '#ffffff',
+    borderColor: "#e2e2e2",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 16,
+    color: '#000',
+    position: "relative",
+    zIndex: 1,
+  },
+  searchIconContainerJobc: {
+    width: '12%',
+    height: 45,
+    backgroundColor: '#ffcc3300',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    justifyContent: "center",
+    color: '#FFF',
+    position: "absolute",
+    right: 5,
+    zIndex: 2,
+    pointerEvents: "none"
+  },
+  gradWrapperInner: {
+    zIndex: 1000,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    height: 100,
+    bottom: 57,
+    position: "absolute",
+    width: '100%',
+    pointerEvents: "none",
   },
 });
 

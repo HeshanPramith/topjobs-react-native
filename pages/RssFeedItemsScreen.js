@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useLayoutEffect } from "react";
 import { View, Text, TextInput, FlatList, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Linking, Image, Modal, ScrollView, } from "react-native";
 import { parse } from "react-native-rss-parser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,6 +11,8 @@ import { useToast } from '@siteed/react-native-toaster';
 import { useNavigation } from "@react-navigation/native";
 import { Swipeable } from 'react-native-gesture-handler';
 import axios from 'axios';
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import TextTicker from 'react-native-text-ticker';
 
 const RssFeedItemsScreen = ({ route }) => {
   const { rssLink, alias } = route.params;
@@ -39,6 +41,20 @@ const RssFeedItemsScreen = ({ route }) => {
   const handleJobItemPress = useCallback((item) => {
     navigation.navigate('JobDetailView', { jobData: item });
   }, [navigation]);
+
+  const handleCategoryChange = () => {
+    navigation.navigate('JobCategory', { selectedCategory: alias });
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity style={{ marginRight: 15 }} onPress={handleCategoryChange}>
+          <FontAwesome6 name="arrows-turn-to-dots" size={20} color="white"/>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, handleCategoryChange])
 
   useEffect(() => {
     const fetchCoordinates = async () => {
@@ -147,9 +163,8 @@ const RssFeedItemsScreen = ({ route }) => {
       .then((response) => response.text())
       .then((responseData) => parse(responseData))
       .then((rss) => {
-        //console.log(rss);
         setRssItems(rss.items);
-        navigation.setOptions({ title: alias || "RSS Feed Items" });
+        navigation.setOptions({ title: `${alias || "RSS Feed Items"}` });
       })
       .catch((error) => console.error("Error fetching RSS feed:", error))
       .finally(() => setLoading(false));
@@ -235,21 +250,12 @@ const RssFeedItemsScreen = ({ route }) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.mainscontainer} keyboardShouldPersistTaps="handled">
-        <View style={styles.topbar}>
-          <Ionicons
-            name={"briefcase"}
-            size={20}
-            color="#000000"
-            style={styles.commicon}
-          />
-          <Text style={styles.jobtotal}>Total Jobs: {totalJobs}</Text>
-        </View>
+      <View style={styles.mainscontainer} keyboardShouldPersistTaps="handled" backgroundColor={'#F6F7F9'}>
         <View style={styles.headerContainer}>
           <View style={styles.searchContainer}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Search Your Dream Job"
+              placeholder="Job title, company or keyword"
               value={searchQuery}
               placeholderTextColor={'#000000'}
               fontSize={14}
@@ -260,17 +266,15 @@ const RssFeedItemsScreen = ({ route }) => {
             </View>
           </View>
           <TouchableOpacity style={styles.filterButton} onPress={() => setIsFilterModalVisible(true)}>
-            <Ionicons
-              name={"location"}
-              style={styles.locatioIcon}
-            />
+            <FontAwesome6 style={styles.locatioIcon} name="location-dot"/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.filterButton} onPress={() => setIsOrderModalVisible(true)}>
-            <Ionicons
-              name={"filter-circle"}
-              style={styles.locatioIcon}
-            />
+            <FontAwesome6 style={styles.locatioIcon} name="sliders"/>
           </TouchableOpacity>
+        </View>
+        <View style={styles.topBarSearch}>
+          <Text style={styles.jobTotalFil}>Results for '<Text style={styles.boldText}>{searchQuery ? searchQuery : 'All jobs'}</Text>'</Text>
+          <Text style={styles.jobTotalResult}>{totalJobs} Results</Text>
         </View>
         <Modal
           visible={isFilterModalVisible}
@@ -414,16 +418,10 @@ const RssFeedItemsScreen = ({ route }) => {
                   }}
                 >
                   <LinearGradient
-                    colors={["#ececec6c", "#ffffffff"]}
+                    colors={["#ffffffff", "#ffffffff"]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
-                    style={[
-                      styles.gradientContainer,
-                      favorites.some((favItem) => favItem.itunes.block === item.itunes.block) && {
-                        borderLeftColor: "#25c925",
-                        borderLeftWidth: 5,
-                      },
-                    ]}
+                    style={[ styles.gradientContainer ]}
                   >
                     <View style={styles.rssItemTextContainer}>
                       <View style={{ flexDirection: 'row' }}>
@@ -441,7 +439,18 @@ const RssFeedItemsScreen = ({ route }) => {
                           <Text style={[styles.rstxtttl, { flex: 1 }]} numberOfLines={1} ellipsizeMode="tail">
                             {item.title.trim().replace(/\s+/g, ' ')}
                           </Text>
-                          <Text style={[styles.rstxt]} numberOfLines={1} ellipsizeMode="tail">{item.description}</Text>
+                          <TextTicker
+                            style={[styles.rstxt]}
+                            duration={6000} // Adjust duration as needed
+                            loop // Loop the animation
+                            bounce // Bounce animation
+                            repeatSpacer={50} // Repeat spacer
+                            marqueeDelay={2500} // Delay before starting the animation
+                            isInteraction={true} // Allow interaction
+                            useNativeDriver={true} // Use native driver for performance
+                          >
+                            {item.description}
+                          </TextTicker>
                           <Text style={styles.rstxt}>{item.itunes.duration}</Text>
                           <View style={{ flexDirection: 'row' }}>
                             <Text style={styles.rstxtloca}>{renderLocationText(item)}</Text>
@@ -492,6 +501,11 @@ const RssFeedItemsScreen = ({ route }) => {
             )}
           />
         )}
+        <LinearGradient
+          colors={["#F6F7F900", "#f6f7f9c2", "#F6F7F9"]}
+          style={styles.gradWrapperInner}
+          >
+        </LinearGradient>
         <AppNavigator />   
         <Modal
           visible={selectedItem !== null}

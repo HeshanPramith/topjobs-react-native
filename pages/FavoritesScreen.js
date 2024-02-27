@@ -77,7 +77,7 @@ const FavoritesScreen = ({ }) => {
   };
 
   return (
-    <View style={styles.mainscontainerfav}>
+    <View style={styles.mainscontainerfav} backgroundColor={'#F6F7F9'}>
       <View style={styles.topbar}>
         <Ionicons
           name={"briefcase"}
@@ -125,9 +125,16 @@ const FavoritesScreen = ({ }) => {
               }}
             >
               <LinearGradient
-                colors={["#ececec6c", "#FFFFFF"]}
+                colors={["#ffffffff", "#ffffffff"]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
+                style={[
+                  styles.gradientContainer,
+                  // favorites.some((favItem) => favItem.itunes.block === item.itunes.block) && {
+                  //   borderLeftColor: "#25c925",
+                  //   borderLeftWidth: 5,
+                  // },
+                ]}
               >
                 <View style={styles.rssItemTextContainer}>
                   <View style={{ flexDirection: 'row' }}>
