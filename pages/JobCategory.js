@@ -285,11 +285,11 @@ const JobCategory = () => {
                   {alias}
                 </TextTicker>
                 <Text style={[styles.gridBlockCount, isSelected && styles.gridBlockTxtAct]}>Jobs : {itemCount}</Text>
-                {increaseCount > 0 && (
-                  <Text style={[styles.rssLinkButtonCountIncreGrid, isSelected && styles.gridBlockTxtAct]}>
+                {increaseCount > 0 && increaseCount !== previousCounts[link] ? (
+                  <Text style={styles.rssLinkButtonCountIncre}>
                     New : {increaseCount}
                   </Text>
-                )}
+                ) : null}
               </TouchableOpacity>
             );
           })}

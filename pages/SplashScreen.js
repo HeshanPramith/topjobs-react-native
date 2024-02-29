@@ -5,12 +5,13 @@ import {
   TouchableOpacity,
   StatusBar,
   Image,
+  Linking,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import Swiper from 'react-native-swiper';
 import styles from "../assets/styles/styles";
-import { useToast } from '@siteed/react-native-toaster';
+//import { useToast } from '@siteed/react-native-toaster';
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 
 const SplashScreen = () => {
@@ -27,28 +28,32 @@ const SplashScreen = () => {
     setLoading(false);
   }, []);
 
-  const toaster = useToast();
+  //const toaster = useToast();
 
   const handleLoginPress = () => {
-    toaster.show({
-      message: 'Feature Coming Soon',
-      subMessage: 'Jobseeker login feature coming soon',
-      type: 'warning',
-      actionLabel: 'OK',
-      iconVisible: true,
-      snackbarStyle: {
-        borderRadius: 50,
-      },
-      duration: 8000,
-      action() {
+    const link = `http://www.topjobs.lk/applicant/login.jsp?r=index.jsp`;
+    Linking.openURL(link).catch((err) =>
+      console.error("Error opening link:", err)
+    );
+    // toaster.show({
+    //   message: 'Feature Coming Soon',
+    //   subMessage: 'Jobseeker login feature coming soon',
+    //   type: 'warning',
+    //   actionLabel: 'OK',
+    //   iconVisible: true,
+    //   snackbarStyle: {
+    //     borderRadius: 50,
+    //   },
+    //   duration: 8000,
+    //   action() {
 
-      },
-      position: "bottom",
-      subMessageStyle: {
-        fontSize: 12,
-        color: '#FFFFFF'
-      },
-    });
+    //   },
+    //   position: "bottom",
+    //   subMessageStyle: {
+    //     fontSize: 12,
+    //     color: '#FFFFFF'
+    //   },
+    // });
   };
 
   const handleViewJobsPress = () => {
@@ -91,14 +96,14 @@ const SplashScreen = () => {
         <Text style={[styles.logintext, { fontFamily: 'verdanaBold' }]}>topjobs</Text>
         <Text style={[styles.logintextSub]}>topjobs sri lanka Job Network - most popular online job site in Sri Lanka for jobs, careers, recruitment and employment with recruitment automation for employers.</Text>
         <View style={styles.rowContainer}>          
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={handleLoginPress}
             style={styles.lgiconButtonbgLog}
           >
             <FontAwesome6 name="arrow-right-to-bracket" size={20} color={'#FFFFFF'} style={{ marginRight: 10 }}/>
             <Text style={styles.buttonText}>Jobseeker Login</Text>
           </TouchableOpacity>
-          <Text style={[styles.ortext]}>OR</Text>
+          <Text style={[styles.ortext]}>OR</Text> */}
           <TouchableOpacity
             onPress={handleViewJobsPress}
             style={styles.jciconButtonbg}

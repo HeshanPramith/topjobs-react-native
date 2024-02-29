@@ -21,13 +21,18 @@ const AppNavigator = () => {
     navigation.navigate("FavoritesScreen");
   };
 
+  const navigateToContactUs = () => {
+    navigation.navigate("ContactUs");
+  };
+  
+
   const isCurrentPage = (pageName) => route.name === pageName;
 
   return (
     <View style={[styles.buttonContainerBottom]}>
       <View style={[styles.bottomNavigator]}>
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
+        <View style={{ flexDirection: "row"}}>
+          {/* <TouchableOpacity
             style={[
               styles.bottomNavBtn,
               isCurrentPage("Splash") && { backgroundColor: "#8b0000" }, // Apply white background for current page
@@ -51,7 +56,7 @@ const AppNavigator = () => {
               />
               <Text style={[styles.bottomButtonTextSpla]}>Login</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={[
@@ -67,7 +72,7 @@ const AppNavigator = () => {
               }}
             >
               <Ionicons
-                name={isCurrentPage("Main") ? "briefcase" : "briefcase-outline"}
+                name={isCurrentPage("Main") ? "home" : "home-outline"}
                 size={20}
                 color={isCurrentPage("Main") ? "#ffffff" : "#ffffffc4"}
               />
@@ -78,7 +83,7 @@ const AppNavigator = () => {
                     : styles.bottomButtonTextInAct
                 }
               >
-                Job Category
+                Home
               </Text>
             </View>
           </TouchableOpacity>
@@ -111,6 +116,38 @@ const AppNavigator = () => {
                 }
               >
                 My Favourites
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.bottomNavBtn,
+              isCurrentPage("ContactUs") && { backgroundColor: "#8b0000" },
+            ]}
+            onPress={navigateToContactUs}
+          >
+            <View
+              style={{
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name={
+                  isCurrentPage("ContactUs") ? "call" : "call-outline"
+                }
+                size={20}
+                color={isCurrentPage("ContactUs") ? "#ffffff" : "#ffffffc4"}
+              />
+              <Text
+                style={
+                  isCurrentPage("ContactUs")
+                    ? styles.bottomButtonTextAct
+                    : styles.bottomButtonTextInAct
+                }
+              >
+                Contact Us
               </Text>
             </View>
           </TouchableOpacity>

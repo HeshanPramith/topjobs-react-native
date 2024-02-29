@@ -50,7 +50,7 @@ const DetailTab = ({ jobData }) => {
                 h6: { color: '#000000', fontSize: 16, marginBottom: 5, fontWeight: "500" },
                 ul: { color: '#999999', fontSize: 12 },
                 ol: { color: '#999999', fontSize: 12 },
-                li: { color: '#999999', fontSize: 14, },
+                li: { color: '#999999', fontSize: 12, },
                 strong: { color: '#000000' },
               }}
               classesStyles={{

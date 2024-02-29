@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: "hidden",
     borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
+    borderBottomRightRadius: 0,
   },
   spconWrapper: {
     flex: 1,
@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderCurve: "circular",
     borderRadius: 15,
-    backgroundColor: '#000000'
+    borderBottomLeftRadius: 220,
+    borderBottomRightRadius: 220,
+    backgroundColor: '#000000',
   },
   text: {
     fontSize: 50,
@@ -52,17 +54,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    textAlign: "left",
+    textAlign: "center",
     letterSpacing: -2,
     paddingLeft: 10,
-    marginTop: 20
+    marginTop: 20,
   },
   logintextSub: {
     fontSize: 14,
     color: "#7c7c7c",
-    paddingLeft: 10,
+    paddingHorizontal: 15,
     marginVertical: 20,
-    lineHeight: 20
+    lineHeight: 20,
+    width: '100%',
+    textAlign: "center",
   },
   logintext2: {
     fontSize: 19,
@@ -277,6 +281,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: "center",
     justifyContent: 'flex-start',
+    borderRightWidth: 5,
+    borderRightColor: "#ececec6c"
+  },
+  commContainerRes: {
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    width: '100%'
+  },
+  rssLinkButtonAct: {
+    marginTop: 10,
+    padding: 15,
+    paddingLeft: 10,
+    backgroundColor: "#ececec6c",
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: "center",
+    justifyContent: 'flex-start',
+    borderRightWidth: 5,
+    borderRightColor: "#00cf34"
   },
   rssLinkButtonCount: {
     position: "absolute",
@@ -296,16 +320,16 @@ const styles = StyleSheet.create({
   bottomNavigator: {
     backgroundColor: "#8b0000",    
     width: '100%',
-    justifyContent: "space-around",
-    alignContent: "space-around",
+    justifyContent: "space-between",
+    alignContent: "space-between",
     alignItems: "center",
     paddingVertical: 10,
     borderRadius: 0,
     marginHorizontal: 0,
   },
   bottomNavBtn: {
-    marginHorizontal: 0,
-    width: 120
+    // marginHorizontal: '6%',
+    width: '33.333%'
   },
   bottomButtonText: {
     fontSize: 12
@@ -713,6 +737,12 @@ const styles = StyleSheet.create({
     color: "#575757",
     fontWeight: '500'
   },
+  jobTotalResultHot: {
+    fontSize: 10,
+    color: "#575757",
+    fontWeight: '500',
+    marginTop: 5
+  },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -1074,7 +1104,7 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', // or use 'space-around' based on your design preference
+    justifyContent: 'center', // or use 'space-around' based on your design preference
   },
   refIcon: {
     marginRight: 8,
@@ -1222,6 +1252,183 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: '100%',
     pointerEvents: "none",
+  },
+  mainsContainerContact: {
+    flex: 1,
+    backgroundColor: "#fff",
+    //alignItems: "center",
+    //justifyContent: "center",
+  },
+  loginTextContactWelcome: {
+    fontSize: 20,
+    color: "#3a3a3a",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    textAlign: "center",
+    paddingLeft: 10,
+    marginTop: 25
+  },
+  loginTextContact: {
+    fontSize: 40,
+    color: "#c00000",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    textAlign: "center",
+    paddingLeft: 10,
+    marginTop: 10
+  },
+  scrollContact: {
+    width: '100%',
+    marginBottom: 15
+  },
+  scrollContactBottom: {
+    width: '100%',
+    padding: 15,
+    paddingTop: 0,
+    paddingBottom: 0
+  },
+  useListEachEmail: {
+    width: 120,
+    height: 110,
+    backgroundColor: '#005cd4',
+    marginRight: 15,
+    borderColor: "#005cd4",
+    borderWidth: 1,
+    padding: 15,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 15,
+  },
+  useListEach: {
+    width: 90,
+    height: 110,
+    backgroundColor: '#ffffff',
+    marginRight: 10,
+    borderColor: "#e2e2e2",
+    borderWidth: 1,
+    padding: 15,
+    paddingHorizontal: 5,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  contactUsWraper: {
+    width: '100%',
+    position: "relative",
+    paddingHorizontal: 0
+  },
+  userListItem: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: "500",
+    marginTop: 10
+  },
+  userContIcon: {
+    color: '#FFFFFF',
+    marginHorizontal: 5,
+    fontSize: 30
+  },
+  contactMainTitle: {
+    width: '100%',
+    textAlign: "left",
+    fontSize: 18,
+    color: '#505050',
+    fontWeight: "500",
+    marginTop: 5,
+    marginBottom: 15,
+    paddingLeft: 15
+  },
+  contactSubTitle: {
+    width: '100%',
+    textAlign: "left",
+    fontSize: 14,
+    color: '#808080',
+    paddingVertical: 10,
+    paddingTop: 0,
+    marginBottom: 10,
+    paddingLeft: 15
+  },
+  blockList: {
+    width: 210,
+    backgroundColor: '#ffffff',
+    marginRight: 10,
+    padding: 15,
+    paddingVertical: 10,
+    borderRadius: 5,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    borderColor: "#e2e2e2",
+    borderWidth: 1,
+  },
+  blockListTitle: {
+    color: '#FFFFFF',
+    fontWeight: "500",
+    fontSize: 16,
+    marginBottom: 15
+  },
+  blockListText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    marginBottom: 10,
+    marginRight: 15
+  },
+  blockListEmail: {
+    color: '#FFFFFF',
+    fontSize: 14,
+  },
+  blockListComm: {
+    width: 'auto',
+    backgroundColor: '#ffffff',
+    marginRight: 10,
+    padding: 15,
+    paddingVertical: 10,
+    borderRadius: 5,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    borderColor: "#e2e2e2",
+    borderWidth: 1,
+  },
+  blockListTitleComm: {
+    color: '#313131',
+    fontWeight: "500",
+    fontSize: 16,
+    marginBottom: 15
+  },
+  blockListTextComm: {
+    color: '#313131',
+    fontSize: 14,
+    marginBottom: 10,
+    marginRight: 15
+  },
+  blockListEmailComm: {
+    color: '#313131',
+    fontSize: 14,
+  },
+  blockListIcon: {
+    paddingRight: 10,
+    fontSize: 16
+  },
+  mapContact: {
+    width: '100%',
+    height: 250,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  mapContainerContact: {
+    width: '100%',
+    height: 250,
+    borderRadius: 10, // Adjust the border radius as needed
+    backgroundColor: "#f8f8f894", // Adjust the background color as needed
+    overflow: "hidden", // This ensures the border radius is applied correctly
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    marginBottom: 120,
+    borderColor: "#e2e2e2",
+    borderWidth: 1,
   },
 });
 

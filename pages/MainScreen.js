@@ -32,6 +32,8 @@ const MainScreen = () => {
   const toaster = useToast();
   const [previousCounts, setPreviousCounts] = useState({});
   const [filteredItems, setFilteredItems] = useState([]);
+  const [pinnedCategories, setPinnedCategories] = useState([]);
+  const [hotJobsCount, setHotJobsCount] = useState(0);
 
   const [fontsLoaded] = useFonts({
     verdana: require("../assets/fonts/verdana.ttf"),
@@ -60,6 +62,7 @@ const MainScreen = () => {
       // Filter items based on itunes.subtitle === 'DEFZZZ'
       const filtered = allItems.filter(item => item.itunes && item.itunes.subtitle === 'DEFZZZ');
       setFilteredItems(filtered);
+      setHotJobsCount(filtered.length);
     
       setLoadingDefzz(false); // Set loadingDefzz to false after fetching and filtering
     };
@@ -250,10 +253,33 @@ const MainScreen = () => {
     return null;
   }
 
+  // Function to toggle pin status of a category
+  const togglePinCategory = (alias) => {
+    if (pinnedCategories.includes(alias)) {
+      setPinnedCategories(pinnedCategories.filter(item => item !== alias));
+    } else {
+      setPinnedCategories([...pinnedCategories, alias]);
+    }
+  };
+
+  // Sort categories based on pin status
+  const sortCategories = (a, b) => {
+    if (pinnedCategories.includes(a.alias) && !pinnedCategories.includes(b.alias)) {
+      return -1;
+    } else if (!pinnedCategories.includes(a.alias) && pinnedCategories.includes(b.alias)) {
+      return 1;
+    } else {
+      return 0;
+    }
+  };
+
   return (
     <View style={styles.mainsContainerHotjob}>
       <View style={styles.commContainer}>
-        <Text style={styles.comTitles}>Hot Jobs</Text>
+        <View style={styles.commContainerRes}>
+          <Text style={styles.comTitles}>Hot Jobs</Text>
+          <Text style={styles.jobTotalResultHot}>({hotJobsCount} Results)</Text>
+        </View>
       </View>
       <View style={styles.hotJobsWraper}>
         <View style={styles.hotJobs}>
@@ -344,31 +370,40 @@ const MainScreen = () => {
         </View>
       ) : (
         <ScrollView style={styles.scrollViewMain}>
-          {rssData.map(({ link, alias, itemCount, increaseCount }) => {
+          {rssData.slice().sort(sortCategories).map(({ link, alias, itemCount, increaseCount }) => {
             const rssLinkData = rssLinksWithAlias.find(data => data.link === link);
             const iconName = rssLinkData?.icon || "briefcase";
             if (itemCount === 0) {
               return null; // Skip rendering TouchableOpacity if itemCount is 0
             }
-            return (              
-              <TouchableOpacity
-                key={link}
-                onPress={() => handleRssLinkClick(link, alias)}
-                style={styles.rssLinkButton}
-              >
-                <View style={styles.rssLinkButtonICon}>
-                  <Icon name={iconName} size={18} color="#000" style={styles.iconStyle} />
-                </View>
-                <Text style={styles.rssLinkButtonTxt}>{alias}</Text>
-                <Text style={styles.rssLinkButtonCount}>{itemCount}</Text>
-                {increaseCount > 0 && (
-                  <Text style={styles.rssLinkButtonCountIncre}>
-                    New : {increaseCount}
-                  </Text>
-                )}
-              </TouchableOpacity>
+            return (    
+              <View key={link} style={styles.categoryContainer}>         
+                <TouchableOpacity
+                  key={link}
+                  onPress={() => handleRssLinkClick(link, alias)}
+                  style={pinnedCategories.includes(alias) ? styles.rssLinkButtonAct : styles.rssLinkButton}
+                >
+                  <TouchableOpacity
+                    onPress={() => togglePinCategory(alias)}
+                    style={styles.pinButton}
+                  >
+                    <Ionicons name={pinnedCategories.includes(alias) ? "bookmark" : "bookmark-outline"} size={20} color="#25c925" style={{ marginRight: 10 }} />
+                  </TouchableOpacity>
+                  <View style={styles.rssLinkButtonICon}>
+                    <Icon name={iconName} size={18} color="#000" style={styles.iconStyle} />
+                  </View>
+                  <Text style={styles.rssLinkButtonTxt}>{alias}</Text>
+                  <Text style={styles.rssLinkButtonCount}>{itemCount}</Text>
+                  {increaseCount > 0 && increaseCount !== previousCounts[link] ? (
+                    <Text style={styles.rssLinkButtonCountIncre}>
+                      New : {increaseCount}
+                    </Text>
+                  ) : null}
+                </TouchableOpacity>
+              </View> 
             );
           })}
+          <View height={50}></View>
         </ScrollView>
       )}
       <LinearGradient
@@ -402,7 +437,7 @@ const MainScreen = () => {
               </View>
             </View>
           </TouchableWithoutFeedback>
-        </Modal>
+      </Modal>
     </View>
   );
 };
